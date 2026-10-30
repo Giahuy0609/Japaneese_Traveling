@@ -1,0 +1,1063 @@
+/* ==========================================================================
+   JAPAN SAMURAI — CINEMATIC TRAVEL EXPERIENCE
+   Design System & Global Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+JP:wght@300;400;600;700;900&display=swap');
+
+:root {
+  /* Color Palette */
+  --color-ink-black: #08090B;
+  --color-charcoal: #191B20;
+  --color-charcoal-light: #242730;
+  --color-warm-white: #F5F0E8;
+  --color-parchment: #EBE4D8;
+  --color-vermilion: #B83A32;
+  --color-vermilion-glow: rgba(184, 58, 50, 0.45);
+  --color-vermilion-bright: #D84239;
+  --color-muted-stone: #8A8985;
+  --color-stone-dark: #4A4A48;
+  --color-forest-green: #29372F;
+  --color-gold-accent: #C5A059;
+  --color-gold-glow: rgba(197, 160, 89, 0.3);
+
+  /* Typography (Default: Japanese & English) */
+  --font-editorial: 'Cinzel', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-japanese: 'Noto Serif JP', 'Shippori Mincho', 'Yu Mincho', serif;
+  --font-sans: 'Be Vietnam Pro', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 7rem;
+  --space-2xl: 11rem;
+
+  /* Layout */
+  --container-max-width: 1440px;
+  --container-padding: clamp(1.25rem, 4vw, 3.5rem);
+
+  /* Transitions */
+  --transition-fast: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-cinematic: 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+
+  /* Elevation */
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-dramatic: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-vermilion: 0 0 30px var(--color-vermilion-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Vietnamese Typography Overrides (Tối ưu 100% tiếng Việt không lỗi font)
+   - Cormorant Garamond: Nét thanh kiếm quý phái, điện ảnh, đầy đủ dấu tiếng Việt
+   - Be Vietnam Pro: Thiết kế chuẩn mực cho dấu thanh tiếng Việt
+   -------------------------------------------------------------------------- */
+html[lang="vi"] {
+  --font-editorial: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-japanese: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[lang="vi"] .hero-title,
+html[lang="vi"] .section-title,
+html[lang="vi"] .modal-title,
+html[lang="vi"] .brand-name {
+  letter-spacing: 0.05em;
+}
+
+html[lang="vi"] .nav-link {
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+}
+
+/* .section-title-jp khi hiển thị tiếng Việt:
+   - Dùng Cormorant Garamond italic để tạo chiều sâu thay vì Noto Serif JP
+   - Giảm letter-spacing từ 0.2em (chuẩn cho Kanji) xuống 0.03em (chuẩn cho Latin/Việt)
+   - Tăng opacity lên 0.55 cho dễ đọc hơn (Kanji có thể mờ vì người đọc nhận diện khối, Latin cần độ rõ) */
+html[lang="vi"] .section-title-jp {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(245, 240, 232, 0.5);
+}
+
+/* culture-category-label: giảm letter-spacing cho chữ Việt, keep uppercase */
+html[lang="vi"] .culture-category-label {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* culture-title-jp: đổi font sang Cormorant Garamond italic, giảm letter-spacing */
+html[lang="vi"] .culture-title-jp {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-vermilion);
+}
+
+/* slide-location-meta (01 / VÙNG KANSAI): đổi sang màu vàng gold nổi bật hơn,
+   giảm letter-spacing cho chữ Việt dấu không bị giãn */
+html[lang="vi"] .slide-location-meta {
+  color: var(--color-gold-accent);
+  letter-spacing: 0.12em;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+/* section-tag (badge nhỏ phía trên tiêu đề section):
+   Cinzel + letter-spacing 0.3em → chữ Việt bị siêu giãn + không có dấu
+   → Be Vietnam Pro + thu hẹp letter-spacing */
+html[lang="vi"] .section-tag {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: none;          /* Giữ nguyên chữ hoa từ i18n, không CSS uppercase */
+  color: var(--color-gold-accent); /* Vàng gold nổi bật hơn đỏ vermilion trên nền tối */
+}
+
+/* slide-subtitle-jp (vd: "Cố Đô Ngàn Năm Cổ Kính"):
+   Noto Serif JP + letter-spacing 0.2em → không có dấu Việt, chữ giãn rộng
+   → Cormorant Garamond italic + letter-spacing chuẩn Latin */
+html[lang="vi"] .slide-subtitle-jp {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--color-gold-accent);
+}
+
+/* bushido-virtues-badge ("ĐẠO VÕ SĨ・TRIẾT LÝ BUSHIDO"):
+   Noto Serif JP + letter-spacing 0.2em → không dấu Việt + giãn xấu
+   Tăng viền & nền để badge nổi bật hơn trên nền tối */
+html[lang="vi"] .bushido-virtues-badge {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  color: var(--color-gold-accent);
+  border-color: var(--color-gold-accent);
+  background: rgba(197, 160, 89, 0.12);
+  box-shadow: 0 0 12px rgba(197, 160, 89, 0.2);
+}
+
+/* geisha-badge ("Tâm hoa phố — ichigo ichie"):
+   Cùng vấn đề với bushido-virtues-badge ở trên khi hiển thị tiếng Việt */
+html[lang="vi"] .geisha-badge {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  color: var(--color-gold-accent);
+  border-color: var(--color-gold-accent);
+  background: rgba(197, 160, 89, 0.12);
+  box-shadow: 0 0 12px rgba(197, 160, 89, 0.2);
+}
+
+/* samurai-caption-tag ("TINH THẦN CHIẾN BINH"):
+   Cinzel + letter-spacing 0.3em + uppercase → chữ Việt giãn, dấu xấu, màu tối
+   → Be Vietnam Pro + gold nổi bật */
+html[lang="vi"] .samurai-caption-tag {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  text-transform: none;
+  color: var(--color-gold-accent);
+  text-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+}
+
+/* samurai-read-more-btn (Nút Xem Thêm Samurai):
+   Dùng Be Vietnam Pro để dấu tiếng Việt hiển thị sắc nét, chuẩn dáng chữ */
+html[lang="vi"] .samurai-read-more-btn {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--color-ink-black);
+  color: var(--color-warm-white);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-warm-white);
+  background-color: var(--color-ink-black);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.intro-active {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Washi Paper Subtle Texture Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(245, 240, 232, 0.03) 1px, transparent 0);
+  background-size: 32px 32px;
+  z-index: 999;
+  opacity: 0.6;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Typography Utility Classes
+   -------------------------------------------------------------------------- */
+.font-editorial {
+  font-family: var(--font-editorial);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.font-japanese {
+  font-family: var(--font-japanese);
+  letter-spacing: 0.12em;
+}
+
+.text-vermilion {
+  color: var(--color-vermilion);
+}
+
+.text-gold {
+  color: var(--color-gold-accent);
+}
+
+.text-muted {
+  color: var(--color-muted-stone);
+}
+
+.label-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.label-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-vermilion);
+  box-shadow: 0 0 8px var(--color-vermilion);
+}
+
+/* --------------------------------------------------------------------------
+   Container & Layout
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(5rem, 10vw, 10rem);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons & Interactive Elements
+   -------------------------------------------------------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.15rem 2.5rem;
+  font-family: var(--font-editorial);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  background: var(--color-vermilion);
+  border: 1px solid var(--color-vermilion-bright);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 4px 20px var(--color-vermilion-glow);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-vermilion-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--color-vermilion-glow);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.15rem 2.25rem;
+  font-family: var(--font-editorial);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  background: rgba(25, 27, 32, 0.7);
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-warm-white);
+  background: rgba(245, 240, 232, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Hanko (Japanese Seal Stamp) */
+.hanko-stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--color-vermilion);
+  color: var(--color-vermilion);
+  font-family: var(--font-japanese);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 10px rgba(184, 58, 50, 0.3);
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   Header & Navigation
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding-block: 1.5rem;
+  transition: padding var(--transition-smooth), background-color var(--transition-smooth), backdrop-filter var(--transition-smooth);
+}
+
+.site-header.scrolled {
+  padding-block: 1rem;
+  background-color: rgba(8, 9, 11, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.japan-flag {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 32px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.japan-flag::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #bc002d;
+  transform: translate(-50%, -50%);
+}
+
+.brand-emblem {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-emblem-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-vermilion);
+  box-shadow: 0 0 12px var(--color-vermilion-glow);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-editorial);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--color-warm-white);
+}
+
+.brand-sub {
+  font-family: var(--font-japanese);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--color-muted-stone);
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-editorial);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted-stone);
+  position: relative;
+  padding-block: 0.35rem;
+  transition: color var(--transition-fast);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--color-vermilion);
+  transition: width var(--transition-smooth);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-warm-white);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Unified styling for all action buttons in header */
+.header-actions .audio-toggle-btn,
+.header-actions .replay-intro-btn,
+.header-actions .lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 38px;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  color: var(--color-warm-white);
+  background: rgba(25, 27, 32, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+.header-actions .audio-toggle-btn:hover,
+.header-actions .replay-intro-btn:hover,
+.header-actions .lang-toggle-btn:hover,
+.header-actions .lang-dropdown-wrapper.open .lang-toggle-btn {
+  border-color: var(--color-vermilion);
+  color: var(--color-vermilion-bright);
+  background: rgba(184, 58, 50, 0.12);
+  box-shadow: 0 0 16px rgba(184, 58, 50, 0.25);
+}
+
+.header-actions .audio-toggle-btn svg,
+.header-actions .replay-intro-btn svg,
+.header-actions .lang-toggle-btn svg {
+  flex-shrink: 0;
+  display: block;
+}
+
+.audio-toggle-btn.muted .sound-wave-icon {
+  opacity: 0.4;
+}
+
+/* --------------------------------------------------------------------------
+   Language Switcher Dropdown
+   -------------------------------------------------------------------------- */
+.lang-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lang-toggle-btn .lang-icon {
+  opacity: 0.85;
+}
+
+.lang-toggle-btn .lang-current-label {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: none; /* keep original capitalization (日本語 / English / Tiếng Việt) */
+}
+
+.lang-toggle-btn .lang-arrow {
+  opacity: 0.6;
+  transition: transform var(--transition-fast);
+  margin-left: 2px;
+}
+
+.lang-dropdown-wrapper.open .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown-menu {
+  display: none !important;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  background: rgba(14, 16, 20, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  z-index: 10000;
+}
+
+.lang-dropdown-wrapper.open .lang-dropdown-menu {
+  display: flex !important;
+  flex-direction: column;
+  gap: 3px;
+  animation: langDropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes langDropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lang-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-warm-white);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.lang-option:hover {
+  background: rgba(184, 58, 50, 0.18);
+  color: #fff;
+}
+
+.lang-option.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-gold-accent);
+  font-weight: 600;
+}
+
+.lang-option .lang-flag-svg {
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.lang-option .lang-name {
+  flex: 1;
+  letter-spacing: 0.02em;
+}
+
+.lang-option .lang-check {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-gold-accent);
+  opacity: 0;
+  margin-left: auto;
+  transition: opacity var(--transition-fast);
+}
+
+.lang-option.active .lang-check {
+  opacity: 1;
+}
+
+/* Hamburger button for mobile */
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+  padding: 4px 0;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-warm-white);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .nav-desktop.mobile-open {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(8, 9, 11, 0.96);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    z-index: 100;
+  }
+
+  .nav-desktop.mobile-open .nav-link {
+    font-size: 1.25rem;
+    letter-spacing: 0.25em;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 6rem;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background-color: var(--color-ink-black);
+}
+
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  transform: scale(1.05);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.85) contrast(1.15);
+  z-index: 1;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 2;
+  filter: brightness(0.85) contrast(1.1);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-bg-video.playing {
+  opacity: 1;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 65% 45%, rgba(8, 9, 11, 0.15) 0%, rgba(8, 9, 11, 0.55) 75%, rgba(8, 9, 11, 0.85) 100%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.45) 0%, transparent 35%, rgba(8, 9, 11, 0.85) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-overlay-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(8, 9, 11, 0.6) 100%),
+              linear-gradient(180deg, rgba(8, 9, 11, 0.4) 0%, transparent 40%, rgba(8, 9, 11, 0.85) 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  padding-block: 4rem;
+  max-width: 900px;
+}
+
+.hero-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--color-muted-stone);
+}
+
+.hero-metadata span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-title-group {
+  margin-bottom: 2.25rem;
+}
+
+.hero-subtitle-jp {
+  font-family: var(--font-japanese);
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--color-vermilion);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-subtitle-jp::before {
+  content: '';
+  width: 40px;
+  height: 2px;
+  background: var(--color-vermilion);
+}
+
+.hero-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-parchment);
+  max-width: 620px;
+  margin-bottom: 3rem;
+  border-left: 2px solid rgba(184, 58, 50, 0.6);
+  padding-left: 1.25rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: var(--container-padding);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-muted-stone);
+  font-family: var(--font-editorial);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 48px;
+  height: 1px;
+  background: rgba(245, 240, 232, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-vermilion);
+  animation: scrollLineRun 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollLineRun {
+  0% { left: -100%; }
+  50% { left: 0%; }
+  100% { left: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   Section Common Headers
+   -------------------------------------------------------------------------- */
+.section-header {
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-editorial);
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-vermilion);
+  margin-bottom: 1rem;
+}
+
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-vermilion-bright), var(--color-gold-accent));
+  box-shadow: 0 0 6px var(--color-vermilion-glow);
+  border-radius: 2px;
+}
+
+.section-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--color-warm-white);
+}
+
+.section-title-jp {
+  font-family: var(--font-japanese);
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  letter-spacing: 0.2em;
+  color: rgba(245, 240, 232, 0.35);
+  margin-top: 0.35rem;
+}
+
+.samurai-section .section-title {
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+}
+
+.samurai-section .section-title-jp,
+html[lang="vi"] .samurai-section .section-title-jp {
+  color: #e8e2d9;
+  font-weight: 500;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+
+.samurai-section .samurai-text {
+  color: #e0dbd2;
+  font-weight: 500;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility & Reduced Motion
+   -------------------------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-vermilion);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

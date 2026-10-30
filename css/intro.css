@@ -1,0 +1,800 @@
+/* ==========================================================================
+   JAPAN SAMURAI — CINEMATIC INTRO & CALLIGRAPHY STROKE ANIMATION
+   ========================================================================== */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-ink-black);
+  z-index: 9000; /* BELOW split-screen-wrapper (9995) so split wipe reveals hero */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+              visibility 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.intro-overlay.finished {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Force ALL scene children hidden when overlay finishes — prevents bleed-through */
+.intro-overlay.finished .samurai-silhouette-container,
+.intro-overlay.finished .calligraphy-wrapper,
+.intro-overlay.finished .intro-stage {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Atmospheric Smoke & Particle Canvas */
+.intro-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Washi texture for intro */
+.intro-texture {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(24, 27, 32, 0.8) 0%, #08090B 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 1px, transparent 0, transparent 40px);
+  z-index: 0;
+}
+
+/* Floating Mist Layers */
+.intro-mist-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.35;
+  background: radial-gradient(ellipse at 50% 80%, rgba(184, 58, 50, 0.12) 0%, transparent 60%);
+  animation: mistPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes mistPulse {
+  0% { transform: scale(1) translateY(0); opacity: 0.25; }
+  100% { transform: scale(1.1) translateY(-20px); opacity: 0.45; }
+}
+
+/* Intro Main Stage */
+.intro-stage {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1100px;
+  height: 100%;
+  max-height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  perspective: 1000px;
+}
+
+/* --------------------------------------------------------------------------
+   Scene B: SVG Calligraphy Container
+   -------------------------------------------------------------------------- */
+.calligraphy-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.calligraphy-wrapper.faded {
+  opacity: 0.04;
+  transform: scale(0.92);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+/* SVG Authentic Kanji Strokes Canvas */
+.calligraphy-svg {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  overflow: visible;
+  filter: drop-shadow(0 0 15px rgba(245, 240, 232, 0.25));
+}
+
+/* Individual Stroke Paths */
+.brush-stroke {
+  fill: none;
+  stroke: var(--color-warm-white);
+  stroke-width: 22;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* stroke-dasharray and stroke-dashoffset set dynamically in JS */
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+/* Red Accent Kanji Strokes or Seals */
+.brush-stroke.stroke-accent {
+  stroke: var(--color-vermilion);
+  filter: drop-shadow(0 0 10px var(--color-vermilion-glow));
+}
+
+/* Dynamic Calligraphy Brush Tip Tracker */
+.brush-tip {
+  fill: var(--color-vermilion);
+  r: 6;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  filter: drop-shadow(0 0 8px var(--color-vermilion));
+}
+
+.brush-tip.active {
+  opacity: 1;
+}
+
+/* Hanko Seal Stamp Impact */
+.intro-hanko {
+  position: absolute;
+  top: 15%;
+  right: 8%;
+  width: 80px;
+  height: 80px;
+  border: 4px solid var(--color-vermilion);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-vermilion);
+  font-family: var(--font-japanese);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: scale(2.5) rotate(-15deg);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 30px var(--color-vermilion-glow), inset 0 0 15px rgba(184, 58, 50, 0.3);
+  user-select: none;
+}
+
+.intro-hanko.stamped {
+  opacity: 1;
+  transform: scale(1) rotate(-4deg);
+}
+
+/* Ink Splatter Layer */
+.ink-splatter-group {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.ink-splatter-group.visible {
+  opacity: 1;
+}
+
+/* Full Greeting Typography (「こんにちは、日本へようこそ」) */
+.greeting-text-container {
+  margin-top: 2rem;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.greeting-japanese {
+  font-family: var(--font-japanese);
+  font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--color-warm-white);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+}
+
+.greeting-japanese.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.greeting-english {
+  font-family: var(--font-editorial);
+  font-size: clamp(0.85rem, 1.6vw, 1.2rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold-accent);
+  margin-top: 0.65rem;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.greeting-english.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Voice-over subtitle (vietsub) — reveals line by line, follows site language.
+   Placed at the very bottom edge, far below the “Khám phá Nhật Bản” button. */
+.intro-quote-sub {
+  position: absolute;
+  left: 50%;
+  bottom: 3vh; /* default: under the button, far below all upper text */
+  top: auto;
+  transform: translateX(-50%);
+  margin: 0;
+  width: min(92vw, 48rem);
+  min-height: 3.6em;
+  z-index: 40; /* above samurai caption overlay (z 25) and calligraphy (z 10) */
+  font-family: var(--font-japanese);
+  font-size: clamp(0.9rem, 1.7vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.85;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), top 0.7s ease, bottom 0.7s ease;
+  pointer-events: none;
+}
+
+.intro-quote-sub.revealed {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+/* When samurai scene is revealed, place subtitle ABOVE the yellow "TINH THẦN CHIẾN BINH" line on desktop */
+.intro-quote-sub--samurai {
+  bottom: 30vh; /* trên dòng vàng "TINH THẦN CHIẾN BINH", cách đều, không đè chồng */
+  top: auto;
+}
+
+.intro-quote-sub::before,
+.intro-quote-sub::after {
+  content: '';
+  display: inline-block;
+  width: 1.6em;
+  height: 1px;
+  margin: 0 0.7em;
+  vertical-align: middle;
+  background: linear-gradient(90deg, transparent, var(--color-gold-accent));
+}
+
+.intro-quote-sub::after {
+  background: linear-gradient(270deg, transparent, var(--color-gold-accent));
+}
+
+/* --------------------------------------------------------------------------
+   Scene C: Samurai Photo Reveal & Slash Effect
+   -------------------------------------------------------------------------- */
+.samurai-silhouette-container {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 25;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.samurai-silhouette-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.samurai-photo-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.samurai-hero-photo,
+.samurai-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  object-position: center center;
+  filter: contrast(1.1) brightness(0.95);
+  pointer-events: none;
+  animation: gameCharacterIdle 8s ease-in-out infinite alternate;
+}
+
+@keyframes gameCharacterIdle {
+  0% {
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+  50% {
+    transform: translate(-50%, -50.35%) scale(1.02);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.01);
+  }
+}
+
+.samurai-photo-vignette {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(8, 9, 11, 0.82) 85%, #08090B 100%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.75) 0%, transparent 25%, transparent 75%, rgba(8, 9, 11, 0.95) 100%);
+  pointer-events: none;
+}
+
+.samurai-photo-ember-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 45% 55%, rgba(184, 58, 50, 0.28) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: emberGlowPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes emberGlowPulse {
+  0% { opacity: 0.55; }
+  100% { opacity: 0.95; }
+}
+
+/* Blade Lens Flare Spark on Katana */
+.samurai-blade-flare {
+  position: absolute;
+  top: 52.9%;
+  left: 39.4%;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+  display: none; /* hidden until spark triggered */
+  transform: translate(-50%, -50%) scale(0) rotate(45deg);
+  transition: opacity 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.samurai-blade-flare.spark {
+  opacity: 1;
+  transform: scale(1) rotate(45deg);
+  animation: bladeFlareLiving 4s ease-in-out infinite alternate;
+}
+
+@keyframes bladeFlareLiving {
+  0% { transform: scale(0.92) rotate(45deg); opacity: 0.8; filter: brightness(1); }
+  100% { transform: scale(1.12) rotate(45deg); opacity: 1; filter: brightness(1.25); }
+}
+
+.blade-flare-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 
+    0 0 15px 4px #FFFFFF,
+    0 0 35px 12px var(--color-vermilion),
+    0 0 70px 25px rgba(255, 68, 68, 0.6);
+}
+
+.blade-flare-core::before,
+.blade-flare-core::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 10px var(--color-vermilion);
+}
+
+.blade-flare-core::before {
+  width: 90px;
+  height: 2px;
+}
+
+.blade-flare-core::after {
+  width: 2px;
+  height: 90px;
+}
+
+/* Samurai Caption Overlay */
+.samurai-caption-overlay {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  text-align: center;
+  z-index: 28;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.samurai-silhouette-container.active .samurai-caption-overlay {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.samurai-caption-tag {
+  font-family: var(--font-editorial);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--color-vermilion-bright);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.samurai-caption-title {
+  font-family: var(--font-japanese);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: 0.25em;
+  color: var(--color-warm-white);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+/* Call to Action Button on Samurai Reveal Screen */
+.samurai-enter-btn {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-editorial);
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  background: var(--color-vermilion);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 4px 25px rgba(184, 58, 50, 0.6);
+  transition: all var(--transition-fast);
+  animation: samuraiBtnGlow 2.5s infinite alternate ease-in-out;
+}
+
+.samurai-enter-btn:hover {
+  background: var(--color-vermilion-bright);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 30px rgba(255, 68, 68, 0.85);
+}
+
+@keyframes samuraiBtnGlow {
+  0% { box-shadow: 0 0 15px rgba(184, 58, 50, 0.4); }
+  100% { box-shadow: 0 0 30px rgba(184, 58, 50, 0.9), 0 0 6px rgba(255, 255, 255, 0.8); }
+}
+
+/* Red eye glint on Samurai */
+.samurai-eye-glint {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.samurai-eye-glint.spark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hyper-speed Katana Sword Slash Trail */
+.sword-slash-beam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+}
+
+.slash-path-line {
+  stroke: #FFFFFF;
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px #FFFFFF) drop-shadow(0 0 25px var(--color-vermilion));
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
+
+.sword-slash-beam.cutting {
+  opacity: 1;
+}
+
+.sword-slash-beam.cutting .slash-path-line {
+  animation: swordSlashCut 0.32s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes swordSlashCut {
+  0% { stroke-dashoffset: 2000; opacity: 1; stroke-width: 6; }
+  70% { stroke-dashoffset: 0; opacity: 1; stroke-width: 5; }
+  100% { stroke-dashoffset: -2000; opacity: 0; stroke-width: 1; }
+}
+
+/* White Screen Flash Impact */
+.slash-flash-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #FFFFFF;
+  z-index: 99998;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.slash-flash-screen.flash {
+  animation: flashBurst 0.6s cubic-bezier(0.1, 1, 0.2, 1) forwards;
+}
+
+@keyframes flashBurst {
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+/* Screen Split Halves (Cinematic Wipe) */
+.split-screen-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9995;
+  display: none;
+}
+
+.split-screen-wrapper.active {
+  display: block;
+}
+
+.split-half {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-ink-black);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease 0.15s;
+}
+
+.split-top {
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 78%);
+}
+
+.split-bottom {
+  clip-path: polygon(0 78%, 100% 30%, 100% 100%, 0 100%);
+}
+
+.split-screen-wrapper.slashed .split-top {
+  transform: translate(40px, -45px);
+  opacity: 0;
+}
+
+.split-screen-wrapper.slashed .split-bottom {
+  transform: translate(-40px, 45px);
+  opacity: 0;
+}
+
+/* Camera Shake Effect */
+.camera-shake {
+  animation: cameraImpact 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes cameraImpact {
+  10%, 90% { transform: translate3d(-3px, 2px, 0) scale(1.01); }
+  20%, 80% { transform: translate3d(4px, -3px, 0) scale(1.02); }
+  30%, 50%, 70% { transform: translate3d(-5px, 4px, 0) scale(1.01); }
+  40%, 60% { transform: translate3d(5px, -2px, 0); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   Intro Interactive Controls (Skip, Start, Session Setting)
+   -------------------------------------------------------------------------- */
+.intro-controls-bar {
+  position: absolute; /* relative to #intro-overlay which is fixed fullscreen */
+  top: 1.5rem;
+  right: var(--container-padding);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: auto;
+}
+
+/* Hide controls when intro finishes */
+.intro-overlay.finished .intro-controls-bar {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.skip-intro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-editorial);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-warm-white);
+  background: rgba(25, 27, 32, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transition: all var(--transition-fast);
+}
+
+.skip-intro-btn:hover {
+  background: var(--color-vermilion);
+  border-color: var(--color-vermilion-bright);
+  transform: translateX(3px);
+  box-shadow: 0 0 15px var(--color-vermilion-glow);
+}
+
+/* Initial Start Prompt / Sound Activation */
+.intro-start-modal {
+  position: absolute;
+  bottom: 3.5rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.intro-start-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-start-sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.8rem;
+  background: rgba(184, 58, 50, 0.25);
+  border: 1px solid var(--color-vermilion);
+  border-radius: 999px;
+  color: var(--color-warm-white);
+  font-family: var(--font-editorial);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 0 20px rgba(184, 58, 50, 0.3);
+}
+
+.btn-start-sound:hover {
+  background: var(--color-vermilion);
+  box-shadow: 0 0 30px var(--color-vermilion-glow);
+  transform: translateY(-2px);
+}
+
+.start-hint-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--color-muted-stone);
+  text-transform: uppercase;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sword-slash-beam.cutting .slash-path-line,
+  .camera-shake,
+  .slash-flash-screen.flash {
+    animation: none !important;
+  }
+  .split-half {
+    transition: opacity 0.3s ease !important;
+  }
+}
+
+/* Mobile responsive adjustments for intro */
+@media (max-width: 768px) {
+  .intro-stage {
+    padding: 1rem;
+  }
+
+  .calligraphy-svg {
+    max-height: 280px;
+  }
+
+  .intro-hanko {
+    top: 5%;
+    right: 4%;
+    width: 54px;
+    height: 54px;
+    font-size: 1.1rem;
+    border-width: 3px;
+  }
+
+  .greeting-text-container {
+    margin-top: 1.25rem;
+  }
+
+  .intro-controls-bar {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .intro-start-modal {
+    bottom: 2rem;
+  }
+
+  .samurai-caption-overlay {
+    top: 30%; /* trên mobile: kéo khối text+button lên cao hơn nữa, tạo khoảng cho sub */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto;
+  }
+
+  .samurai-enter-btn {
+    padding: 0.7rem 1.6rem;
+    font-size: 0.75rem;
+  }
+
+  .intro-quote-sub {
+    bottom: 22vh; /* Stroke phase: cao hơn, dễ đọc, tránh thanh nav đáy */
+    font-size: clamp(0.85rem, 4vw, 1rem);
+    width: min(94vw, 42rem);
+    padding-bottom: 1rem;
+  }
+
+  .intro-quote-sub--samurai {
+    bottom: 4vh; /* Samurai phase: sát đáy tối đa, tạo khoảng trống lớn với nút trên */
+    top: auto;
+  }
+}
+
+/* Mobile rất nhỏ (dưới 480px): đẩy sub sát đáy tối đa để không sát nút trên */
+@media (max-width: 480px) {
+  .intro-quote-sub--samurai {
+    bottom: 6vh;
+    font-size: 0.8rem;
+  }
+
+  .intro-quote-sub {
+    bottom: 26vh; /* Stroke phase: cao hơn trên màn hình rất nhỏ */
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile: ẩn dòng chào mừng tiếng Anh/Viet (greetingSub) để không gian sạch hơn */
+@media (max-width: 768px) {
+  #greeting-english,
+  .greeting-english {
+    display: none !important;
+  }
+}

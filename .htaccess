@@ -1,0 +1,19 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# 1. Route WordPress queries (e.g. ?p=8, ?cat=..., ?page_id=...) to index.php
+RewriteCond %{QUERY_STRING} (^|&)(p|page_id|post_type|author|category_name|cat|tag|s)= [NC]
+RewriteRule ^$ index.php [L]
+
+# 2. Serve static files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 3. Route all other requests to index.php (WordPress Pretty Permalinks)
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress

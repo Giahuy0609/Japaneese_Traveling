@@ -1,0 +1,29 @@
+# WordPress (exclude from this front-end project)
+wp-admin/
+wp-includes/
+wp-content/
+wp-*.php
+xmlrpc.php
+
+# Internal QA / temp / check files (do not push)
+_served.html
+_qa_*
+_tmp_*
+*.mjs
+
+# Docs / license / sample (do not push)
+readme.html
+license.txt
+wp-config-sample.php
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dependencies (if any)
+node_modules/
+
+# Logs
+*.log

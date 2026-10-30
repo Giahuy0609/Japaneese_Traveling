@@ -1,0 +1,336 @@
+/* ==========================================================================
+   BUSHIDO VIRTUE MODAL — Cinematic Kanji Draw & Explain Overlay
+   ========================================================================== */
+
+#bushido-virtue-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 4, 3, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+  transition: background 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+#bushido-virtue-modal.is-open {
+  background: rgba(5, 4, 3, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  pointer-events: all;
+}
+
+.bvm-container {
+  position: relative;
+  width: min(900px, 95vw);
+  max-height: 90vh;
+  background: linear-gradient(145deg, #12100d 0%, #0a0906 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(212, 175, 55, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  transform: scale(0.88) translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#bushido-virtue-modal.is-open .bvm-container {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Left: Canvas drawing panel */
+.bvm-canvas-panel {
+  position: relative;
+  background: #080705;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  border-right: 1px solid rgba(212, 175, 55, 0.15);
+  min-height: 460px;
+  overflow: hidden;
+}
+
+.bvm-canvas-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bvm-kanji-watermark {
+  position: absolute;
+  font-size: 16rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.025);
+  font-family: 'Noto Serif JP', serif;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 0;
+}
+
+#bvm-svg {
+  position: relative;
+  z-index: 2;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  background: radial-gradient(circle at 50% 50%, #15130f 0%, #090806 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  padding: 10px;
+}
+
+.bvm-canvas-label {
+  margin-top: 1.25rem;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: rgba(212, 175, 55, 0.6);
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+/* Ink splatter dots */
+.bvm-splatter {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.18);
+  pointer-events: none;
+  animation: bvmSplat 0.6s ease-out forwards;
+  z-index: 1;
+}
+
+@keyframes bvmSplat {
+  0% { transform: scale(0); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* Right: Info panel */
+.bvm-info-panel {
+  padding: 2.5rem 2.25rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.bvm-virtue-number {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #e5c158;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.bvm-virtue-kanji-display {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 4.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 24px rgba(212, 175, 55, 0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+}
+
+#bushido-virtue-modal.is-open .bvm-virtue-kanji-display {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bvm-virtue-romaji {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #e5c158;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.45s;
+}
+
+#bushido-virtue-modal.is-open .bvm-virtue-romaji {
+  opacity: 1;
+}
+
+.bvm-virtue-title {
+  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #fffaf0;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+#bushido-virtue-modal.is-open .bvm-virtue-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bvm-divider {
+  width: 50px;
+  height: 2px;
+  background: #d4af37;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.6s, width 0.8s ease 0.6s;
+}
+
+#bushido-virtue-modal.is-open .bvm-divider {
+  opacity: 1;
+  width: 70px;
+}
+
+.bvm-virtue-desc {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.85;
+  color: #e3ded6;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.7s;
+}
+
+#bushido-virtue-modal.is-open .bvm-virtue-desc {
+  opacity: 1;
+}
+
+.bvm-virtue-quote {
+  border-left: 3px solid #d4af37;
+  padding-left: 1.15rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.18rem;
+  color: #f3dfa2;
+  line-height: 1.7;
+  margin-top: auto;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.85s;
+}
+
+#bushido-virtue-modal.is-open .bvm-virtue-quote {
+  opacity: 1;
+}
+
+/* Close button */
+.bvm-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: #a0998b;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+  line-height: 1;
+}
+
+.bvm-close-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #d4af37;
+}
+
+/* Virtue card: indicate clickable */
+.virtue-card {
+  cursor: pointer;
+}
+
+.virtue-card:active {
+  transform: scale(0.96);
+}
+
+/* Geisha art card: same click treatment as virtue-card */
+.geisha-art-card {
+  cursor: pointer;
+}
+
+.geisha-art-card:active {
+  transform: scale(0.96);
+}
+
+.geisha-art-card:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: 2px;
+}
+
+.virtue-card:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: 2px;
+}
+
+/* Animated drawing hint ring on card */
+.virtue-card .virtue-kanji::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.virtue-card:hover .virtue-kanji {
+  color: #d4af37;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .bvm-container {
+    grid-template-columns: 1fr;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .bvm-canvas-panel {
+    min-height: 280px;
+    border-right: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 2rem 1.5rem;
+  }
+
+  #bvm-svg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .bvm-info-panel {
+    padding: 1.75rem 1.5rem;
+  }
+}
+

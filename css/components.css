@@ -1,0 +1,1655 @@
+/* ==========================================================================
+   JAPAN SAMURAI — SECTIONS & COMPONENTS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Section 5: The Way of the Samurai (侍の精神)
+   -------------------------------------------------------------------------- */
+.samurai-section {
+  position: relative;
+  background-color: var(--color-charcoal);
+  color: var(--color-warm-white);
+  padding-block: clamp(6rem, 12vw, 12rem);
+  overflow: hidden;
+}
+
+/* Background Misty Landscape Layers */
+.samurai-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.samurai-section .section-header {
+  position: relative;
+  z-index: 5;
+}
+
+.samurai-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.35;
+  filter: contrast(1.2) grayscale(0.2);
+  transform: scale(1.08);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.samurai-fog-layer {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 70%, rgba(41, 55, 47, 0.35) 0%, transparent 60%),
+    linear-gradient(180deg, var(--color-charcoal) 0%, transparent 30%, transparent 70%, var(--color-charcoal) 100%);
+}
+
+.samurai-grid-layout {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 6rem);
+}
+
+/* Samurai Visual Diorama with Parallax Depth */
+.samurai-diorama {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 700px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-dramatic);
+  border: 1px solid rgba(245, 240, 232, 0.1);
+  background: #0B0D11;
+}
+
+.diorama-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: contrast(1.15) brightness(0.92);
+}
+
+.samurai-diorama:hover .diorama-hero-image {
+  transform: scale(1.04);
+}
+
+.diorama-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, transparent 55%, rgba(8, 9, 11, 0.85) 100%),
+    radial-gradient(ellipse at center, transparent 40%, rgba(8, 9, 11, 0.5) 100%);
+  pointer-events: none;
+}
+
+.diorama-layer {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.2s cubic-bezier(0.1, 0.2, 0.1, 1);
+}
+
+.diorama-moon {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFDF8 0%, #FFE9C2 40%, rgba(245, 220, 175, 0.3) 70%, transparent 85%);
+  filter: drop-shadow(0 0 50px rgba(255, 230, 180, 0.55));
+}
+
+.diorama-mountain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  opacity: 0.75;
+}
+
+.diorama-samurai-figure {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-height: 85%;
+  height: auto;
+  z-index: 4;
+  overflow: visible;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6)) drop-shadow(0 8px 30px rgba(0, 0, 0, 0.95));
+}
+
+/* Swaying wind elements */
+.wind-sash {
+  transform-origin: 45% 40%;
+  animation: windFlutter 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes windFlutter {
+  0% { transform: rotate(0deg) skewX(0deg); }
+  50% { transform: rotate(3deg) skewX(-2deg); }
+  100% { transform: rotate(-2deg) skewX(3deg); }
+}
+
+.diorama-grass {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  z-index: 5;
+  opacity: 0.85;
+  animation: grassSway 4.2s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes grassSway {
+  0% { transform: skewX(-3deg); }
+  100% { transform: skewX(4deg); }
+}
+
+/* Floating Sakura Petals / Sparks */
+.floating-petals {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  background: radial-gradient(circle, #F8C3CD 20%, #E87A90 80%);
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  opacity: 0.75;
+  animation: petalFall 8s linear infinite;
+}
+
+@keyframes petalFall {
+  0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.85; }
+  90% { opacity: 0.8; }
+  100% { transform: translate(120px, 650px) rotate(540deg); opacity: 0; }
+}
+
+/* Editorial Content for Samurai Section */
+.samurai-editorial {
+  position: relative;
+  z-index: 5;
+}
+
+.bushido-virtues-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 1rem;
+  background: rgba(184, 58, 50, 0.15);
+  border: 1px solid var(--color-vermilion);
+  color: var(--color-vermilion-bright);
+  font-family: var(--font-japanese);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+
+.samurai-quote {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.35;
+  color: var(--color-warm-white);
+  margin-bottom: 2rem;
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-vermilion);
+}
+
+.samurai-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--color-muted-stone);
+  margin-bottom: 2.5rem;
+}
+
+/* Bushido 7 Virtues Grid */
+.virtues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.virtue-card {
+  padding: 1.35rem 0.85rem;
+  background: rgba(14, 15, 18, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.virtue-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-vermilion);
+  transform: scaleX(0);
+  transition: transform var(--transition-fast);
+}
+
+.virtue-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-5px);
+  background: rgba(26, 29, 36, 0.95);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.virtue-card:hover::before {
+  transform: scaleX(1);
+}
+
+.virtue-kanji {
+  font-family: var(--font-japanese);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fffaf0;
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.virtue-card:hover .virtue-kanji {
+  transform: scale(1.1);
+  color: #d4af37;
+}
+
+.virtue-name {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e5c158;
+  text-transform: uppercase;
+  line-height: 1.35;
+  margin-bottom: 0.35rem;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.virtue-meaning {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: #d5cfc5;
+  line-height: 1.45;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Samurai Section Centered CTA Button */
+.samurai-section-cta,
+.samurai-cta-wrap {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 6;
+}
+
+.samurai-read-more-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.samurai-read-more-btn svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.samurai-read-more-btn:hover svg {
+  transform: translateX(5px);
+}
+
+/* --------------------------------------------------------------------------
+   Section 6: Travel Destinations (厳選された旅路)
+   -------------------------------------------------------------------------- */
+.destinations-section {
+  position: relative;
+  background-color: var(--color-ink-black);
+  padding-block: clamp(6rem, 12vw, 12rem);
+}
+
+.destinations-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+/* Slider Controls Header */
+.slider-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.slider-counter {
+  font-family: var(--font-editorial);
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  color: var(--color-muted-stone);
+}
+
+.slider-counter .current-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-warm-white);
+}
+
+/* ── Nút mũi tên chuyển slide đặt đè lên đáy ảnh ── */
+.destinations-track-container {
+  overflow: hidden;
+  border-radius: 6px;
+  position: relative;
+}
+
+.slider-navigation-btns {
+  position: absolute;
+  z-index: 15;
+  bottom: 1.5rem;
+  left: 27.5%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.slider-arrow-btn,
+.slider-navigation-btns .slider-arrow-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(13, 12, 10, 0.8);
+  color: var(--color-warm-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.slider-arrow-btn:hover,
+.slider-navigation-btns .slider-arrow-btn:hover {
+  background: var(--color-vermilion);
+  border-color: var(--color-vermilion-bright);
+  box-shadow: 0 0 20px var(--color-vermilion-glow);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.slider-arrow-btn:active,
+.slider-navigation-btns .slider-arrow-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.slider-arrow-btn svg,
+.slider-navigation-btns .slider-arrow-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+@media (max-width: 1024px) {
+  .slider-navigation-btns {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-navigation-btns {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 0.5rem;
+  }
+
+  .slider-arrow-btn,
+  .slider-navigation-btns .slider-arrow-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .slider-arrow-btn svg,
+  .slider-navigation-btns .slider-arrow-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Carousel Track & Cards */
+
+.destinations-track {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  /* A flex track spans all slides, so `100%` inside it is the whole track.
+     Size slides against the viewport container instead, one slide = 100% of it. */
+  container-type: inline-size;
+  /* Land exactly on the settled pixel: no eased tail on long translations */
+  transition-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.destination-slide {
+  min-width: 100cqw;
+  flex: 0 0 100cqw;
+  position: relative;
+  background: var(--color-charcoal);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.slide-image-box {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 55% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  min-height: 0 !important;
+  overflow: hidden;
+  background-color: #191B20;
+  background-image: radial-gradient(circle at 50% 50%, #242730 0%, #121316 100%);
+}
+
+.slide-image {
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.85);
+}
+
+.destination-slide:hover .slide-image {
+  transform: scale(1.05);
+}
+
+.slide-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, rgba(13, 12, 10, 0.55) 85%, var(--color-charcoal) 100%),
+              linear-gradient(180deg, transparent 82%, rgba(8, 9, 11, 0.55) 100%);
+}
+
+.slide-kanji-watermark {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  font-family: var(--font-japanese);
+  font-size: clamp(4rem, 9vw, 8rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.08);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slide-content-box {
+  margin-left: 55%;
+  padding: clamp(2rem, 3.5vw, 3.25rem) clamp(2rem, 4vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 560px;
+  position: relative;
+}
+
+/* Nút hành động luôn neo đáy, dồn không gian trống lên giữa */
+.slide-content-box .slide-actions {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.slide-content-box .slide-highlights-list,
+.slide-content-box .slide-quick-tags {
+  margin-bottom: 1.75rem;
+}
+
+.slide-location-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-editorial);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--color-vermilion);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.slide-title-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.slide-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(2.2rem, 3.2vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-warm-white);
+}
+
+.slide-subtitle-jp {
+  font-family: var(--font-japanese);
+  font-size: 1.5rem;
+  color: var(--color-gold-accent);
+  margin-top: 0.5rem;
+  letter-spacing: 0.2em;
+}
+
+.slide-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-parchment);
+  margin-bottom: 1.75rem;
+}
+
+.slide-highlights-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  list-style: none;
+}
+
+.highlight-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: var(--color-warm-white);
+}
+
+.slide-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Slider Pagination Indicators */
+.slider-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.slider-dot {
+  width: 32px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.slider-dot.active {
+  background: var(--color-vermilion);
+  width: 56px;
+  box-shadow: 0 0 10px var(--color-vermilion-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Section 7: Japanese Culture (文化と歴史)
+   -------------------------------------------------------------------------- */
+.culture-section {
+  position: relative;
+  background-color: var(--color-charcoal);
+  padding-block: clamp(6rem, 12vw, 12rem);
+}
+
+.culture-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 8vw, 8rem);
+}
+
+.culture-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 7rem);
+}
+
+.culture-row.reverse {
+  direction: rtl;
+}
+
+.culture-row.reverse > * {
+  direction: ltr;
+}
+
+.culture-media {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-dramatic);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #191B20;
+  background-image: radial-gradient(circle at 50% 50%, #242730 0%, #121316 100%);
+}
+
+.culture-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.9);
+}
+
+.culture-media:hover .culture-image {
+  transform: scale(1.05);
+}
+
+.culture-stamp-watermark {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--color-vermilion);
+  color: var(--color-vermilion);
+  font-family: var(--font-japanese);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(8, 9, 11, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.culture-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.culture-category-label {
+  font-family: var(--font-editorial);
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  color: var(--color-gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.culture-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-warm-white);
+  margin-bottom: 0.5rem;
+}
+
+.culture-title-jp {
+  font-family: var(--font-japanese);
+  font-size: 1.35rem;
+  color: var(--color-vermilion);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.15em;
+}
+
+.culture-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--color-parchment);
+  margin-bottom: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Section 8: Geisha — same two-column structure as the Samurai section
+   -------------------------------------------------------------------------- */
+.geisha-section {
+  position: relative;
+  background-color: var(--color-ink-black);
+  color: var(--color-warm-white);
+  padding-block: clamp(5rem, 9vw, 8rem);
+  overflow: hidden;
+  scroll-margin-top: 96px;
+}
+
+/* Hanamikoji street behind everything */
+.geisha-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.geisha-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Push the frame down so the street's own 花見小路 signboard is out of view */
+  object-position: center 70%;
+  opacity: 1;
+  filter: contrast(1.02) saturate(1) brightness(1.32);
+  transform: scale(1.1);
+}
+
+/*
+   Scrim reads left-to-right: the street stays open on the left, the editorial
+   column on the right gets a dark bed. Vertical fades only at the very edges.
+*/
+.geisha-haze-layer {
+  position: absolute;
+  inset: 0;
+  background:
+    /* band behind the section heading: solid only at the very top seam */
+    linear-gradient(180deg, var(--color-ink-black) 0%, rgba(8, 9, 11, 0.82) 5%, rgba(8, 9, 11, 0.38) 15%, rgba(8, 9, 11, 0.06) 26%),
+    /* soft bed for the editorial column — keeps the rooftops readable */
+    linear-gradient(96deg, rgba(8, 9, 11, 0) 0%, rgba(8, 9, 11, 0.04) 30%, rgba(8, 9, 11, 0.46) 48%, rgba(8, 9, 11, 0.72) 64%, rgba(8, 9, 11, 0.7) 100%),
+    /* bottom fade into the next section — kills the grey paving under the CTA */
+    linear-gradient(0deg, var(--color-ink-black) 0%, rgba(8, 9, 11, 0.88) 14%, rgba(8, 9, 11, 0.5) 26%, rgba(8, 9, 11, 0.15) 40%, transparent 54%);
+}
+
+/* Keep the section heading legible over the photo */
+.geisha-section .section-header {
+  position: relative;
+  z-index: 6;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.98), 0 0 60px rgba(0, 0, 0, 0.7);
+}
+
+.geisha-section .section-title {
+  color: var(--color-warm-white);
+}
+
+.geisha-section .section-title-jp {
+  color: rgba(245, 240, 232, 0.88);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.95);
+}
+
+.geisha-grid-layout {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 6rem);
+}
+
+/* Portrait framed exactly like the samurai diorama */
+.geisha-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 620px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-dramatic);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+  background: #0B0D11;
+}
+
+.geisha-portrait-image,
+.geisha-portrait-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 56% 50%;
+  filter: contrast(1.03) brightness(1.02) saturate(1);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+   Source clip is 16:9 and the frame is 4:5, so `cover` crops the sides.
+   Anchor slightly above centre to keep her head, kanzashi and the parasol tip
+   inside the frame instead of slicing the top of the hair.
+*/
+.geisha-portrait-video {
+  display: block;
+  object-position: 50% 26%;
+  background: #0B0D11;
+  /* Tươi sáng hơn: giữ nét biên, đẩy saturation & brightness lên để
+     màu kimono, kanzashi và làn da nổi bật trên nền tối của section */
+  filter: contrast(1.12) brightness(1.1) saturate(1.28);
+}
+
+.geisha-portrait:hover .geisha-portrait-image,
+.geisha-portrait:hover .geisha-portrait-media {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geisha-portrait-video {
+    display: none;
+    background: #0B0D11 url('../images/geisha/maiko-portrait.jpg') center 40% / cover no-repeat;
+  }
+}
+
+.geisha-portrait-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    /* the clip is a bright studio shot — grade it toward the wood-and-lantern
+       palette of the backdrop so it sits in the same scene.
+       Nhẹ tay hơn: giữ video tươi, chỉ tối dần ở chân khung cho caption */
+    linear-gradient(180deg, rgba(8, 9, 11, 0) 66%, rgba(8, 9, 11, 0.5) 100%),
+    radial-gradient(120% 85% at 62% 42%, rgba(8, 9, 11, 0) 48%, rgba(8, 9, 11, 0.28) 100%),
+    linear-gradient(158deg, rgba(20, 24, 34, 0.1) 0%, rgba(8, 9, 11, 0.34) 100%);
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.12);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.geisha-portrait-seal {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 56px;
+  height: 56px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-vermilion);
+  border-radius: 4px;
+  background: rgba(8, 9, 11, 0.65);
+  backdrop-filter: blur(4px);
+  color: var(--color-vermilion);
+  font-family: var(--font-japanese);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  z-index: 2;
+}
+
+/* Drifting lantern motes */
+.geisha-motes {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.geisha-mote {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFE9C2 0%, rgba(197, 160, 89, 0.75) 55%, transparent 80%);
+  box-shadow: 0 0 12px rgba(255, 214, 150, 0.75);
+  opacity: 0;
+  animation: geishaMoteRise 9s ease-in-out infinite;
+}
+
+@keyframes geishaMoteRise {
+  0%   { transform: translate(0, 10px) scale(0.7); opacity: 0; }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.55; }
+  100% { transform: translate(26px, -170px) scale(1.15); opacity: 0; }
+}
+
+/* Editorial column */
+.geisha-editorial {
+  position: relative;
+  z-index: 5;
+}
+
+.geisha-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 1rem;
+  background: rgba(184, 58, 50, 0.15);
+  border: 1px solid var(--color-vermilion);
+  color: var(--color-vermilion-bright);
+  font-family: var(--font-japanese);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+
+.geisha-quote {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.35;
+  color: var(--color-warm-white);
+  margin-bottom: 2rem;
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-vermilion);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
+}
+
+.geisha-lead-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--color-parchment);
+  margin-bottom: 2.5rem;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+
+/* Four arts mini-cards (mirrors .virtue-card) */
+.geisha-arts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 0.9rem;
+  margin-top: 2rem;
+  max-width: 640px;
+}
+
+@media (max-width: 640px) {
+  .geisha-arts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .geisha-art-card {
+    min-height: 118px;
+    padding: 0.9rem 0.6rem;
+  }
+
+  .geisha-art-kanji {
+    font-size: 1.6rem;
+  }
+}
+
+.geisha-art-card {
+  padding: 1.15rem 0.85rem;
+  min-height: 148px;
+  height: 100%;
+  background: #0b0c10;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  transition: all var(--transition-fast);
+}
+
+/* Photo behind every art card, tinted so the text stays readable on desktop */
+.geisha-art-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  filter: saturate(0.85) contrast(1.05);
+  transition: transform 0.6s ease, opacity 0.35s ease;
+}
+
+.geisha-art-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6, 7, 10, 0.93) 0%, rgba(6, 7, 10, 0.6) 55%, rgba(6, 7, 10, 0.3) 100%);
+  pointer-events: none;
+}
+
+.geisha-art-card > *:not(.geisha-art-photo) {
+  position: relative;
+  z-index: 2;
+}
+
+.geisha-art-card:hover .geisha-art-photo {
+  opacity: 0.62;
+  transform: scale(1.06);
+}
+
+.geisha-art-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-vermilion);
+  transform: scaleX(0);
+  transition: transform var(--transition-fast);
+}
+
+.geisha-art-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-5px);
+  background: rgba(26, 29, 36, 0.95);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.geisha-art-card:hover::before {
+  transform: scaleX(1);
+}
+
+.geisha-art-kanji {
+  font-family: var(--font-japanese);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fffaf0;
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.geisha-art-card:hover .geisha-art-kanji {
+  transform: scale(1.1);
+  color: #d4af37;
+}
+
+.geisha-art-name {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e5c158;
+  text-transform: uppercase;
+  line-height: 1.35;
+  margin-bottom: 0.35rem;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.geisha-art-meaning {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  margin: 0;
+  color: #d5cfc5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.geisha-section-cta {
+  position: relative;
+  z-index: 6;
+  margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Giữ nguyên màu đỏ vermilion của .btn-primary (giống nút Samurai) */
+
+
+
+.geisha-read-more-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.geisha-read-more-btn svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.geisha-read-more-btn:hover svg {
+  transform: translateX(5px);
+}
+
+
+
+/* --------------------------------------------------------------------------
+   Section 9: Interactive Calligraphy Studio ("Brush of the Master")
+   -------------------------------------------------------------------------- */
+.brush-studio-section {
+  position: relative;
+  background-color: var(--color-ink-black);
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+
+.studio-container {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2.5rem;
+  background: var(--color-charcoal);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-dramatic);
+}
+
+.studio-canvas-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 400px;
+  background-color: #EAE3D2;
+  background-image: 
+    radial-gradient(#D6CDBC 1px, transparent 1px),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 0, rgba(0, 0, 0, 0.02) 1px, transparent 0, transparent 20px);
+  background-size: 24px 24px, auto;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15);
+  cursor: crosshair;
+}
+
+#calligraphy-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.canvas-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-japanese);
+  font-size: clamp(6rem, 14vw, 12rem);
+  color: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+  user-select: none;
+  font-weight: 900;
+}
+
+/* Studio Controls Sidebar */
+.studio-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.controls-group-title {
+  font-family: var(--font-editorial);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--color-warm-white);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.ink-color-picker {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.ink-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.ink-btn.active {
+  border-color: var(--color-warm-white);
+  transform: scale(1.15);
+}
+
+.ink-black { background-color: #121314; }
+.ink-vermilion { background-color: var(--color-vermilion); }
+.ink-gold { background-color: var(--color-gold-accent); }
+
+.presets-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.preset-btn {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-family: var(--font-japanese);
+  font-size: 1.3rem;
+  color: var(--color-warm-white);
+  transition: all var(--transition-fast);
+}
+
+.preset-btn:hover {
+  background: rgba(184, 58, 50, 0.2);
+  border-color: var(--color-vermilion);
+}
+
+.action-buttons-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Modal: Destination Detail Modal
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 9, 11, 0.88);
+  backdrop-filter: blur(16px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--container-padding);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background: var(--color-charcoal);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 850px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-dramatic);
+  transform: translateY(25px) scale(0.98);
+  transition: transform var(--transition-smooth);
+}
+
+.modal-backdrop.open .modal-container {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-warm-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background: var(--color-vermilion);
+  transform: rotate(90deg);
+}
+
+.modal-hero-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background-color: #191B20;
+  background-image: radial-gradient(circle at 50% 50%, #242730 0%, #121316 100%);
+}
+
+.modal-body {
+  padding: clamp(2rem, 4vw, 3rem);
+}
+
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-vermilion);
+  font-family: var(--font-editorial);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.modal-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  color: var(--color-warm-white);
+  margin-bottom: 0.35rem;
+}
+
+.modal-subtitle-jp {
+  font-family: var(--font-japanese);
+  font-size: 1.4rem;
+  color: var(--color-gold-accent);
+  margin-bottom: 1.5rem;
+}
+
+.modal-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--color-parchment);
+  margin-bottom: 2rem;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-info-item h4 {
+  font-family: var(--font-editorial);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-muted-stone);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.modal-info-item p {
+  font-size: 0.95rem;
+  color: var(--color-warm-white);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  background-color: #050607;
+  padding-block: clamp(5rem, 8vw, 8rem) 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.footer-watermark-kanji {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-japanese);
+  font-size: clamp(8rem, 25vw, 20rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer-top-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-bottom: 4rem;
+}
+
+.footer-brand-col p {
+  color: var(--color-muted-stone);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 320px;
+  margin-top: 1.25rem;
+}
+
+.footer-col-title {
+  font-family: var(--font-editorial);
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  color: var(--color-warm-white);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-link {
+  color: var(--color-muted-stone);
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--color-vermilion-bright);
+}
+
+.footer-bottom {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--color-muted-stone);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Media Queries
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .samurai-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .samurai-diorama {
+    max-height: 520px;
+  }
+
+  .destination-slide {
+    grid-template-columns: 1fr;
+  }
+
+  .slide-image-box {
+    position: static !important;
+    width: 100% !important;
+    min-height: 360px;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .slide-content-box {
+    margin-left: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .slide-content-box .slide-actions {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .studio-container {
+    grid-template-columns: 1fr;
+  }
+
+  .geisha-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .geisha-portrait {
+    max-height: 520px;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .culture-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .culture-row.reverse {
+    direction: ltr;
+  }
+
+  .geisha-portrait {
+    aspect-ratio: 3 / 4;
+    max-height: none;
+    margin-bottom: 0.6rem;
+  }
+
+  /* On small screens the four arts become photo cards instead of text boxes */
+  .geisha-arts-grid {
+    gap: 0.55rem;
+  }
+
+  .geisha-art-card {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+    padding: 1.6rem 0.55rem 0.6rem;
+    justify-content: flex-end;
+    background: #0b0c10;
+    border-color: rgba(212, 175, 55, 0.32);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  }
+
+  .geisha-art-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.62;
+    transition: transform 0.5s ease, opacity 0.35s ease;
+  }
+
+  .geisha-art-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 7, 10, 0.94) 0%, rgba(6, 7, 10, 0.55) 48%, rgba(6, 7, 10, 0.12) 100%);
+    pointer-events: none;
+  }
+
+  .geisha-art-card > *:not(.geisha-art-photo) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .geisha-art-kanji {
+    font-size: 1.5rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .geisha-art-name {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    white-space: normal;
+    margin-bottom: 0;
+  }
+
+  .geisha-art-meaning {
+    font-size: 0.66rem;
+    line-height: 1.35;
+    margin-top: 0.2rem;
+  }
+
+  .geisha-quote {
+    padding-left: 1.1rem;
+    font-size: 1.25rem;
+  }
+
+  .geisha-bg-image {
+    opacity: 0.4;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-actions .btn-primary {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-actions {
+    gap: 0.45rem;
+  }
+  .header-actions .audio-toggle-btn,
+  .header-actions .replay-intro-btn,
+  .header-actions .lang-toggle-btn {
+    height: 34px;
+    padding: 0 0.65rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+  .audio-toggle-btn .audio-status-text {
+    display: none;
+  }
+}
+
+/* Bulletproof safety fallback for language dropdown */
+.lang-dropdown-menu {
+  display: none !important;
+}
+.lang-dropdown-wrapper.open .lang-dropdown-menu {
+  display: flex !important;
+}

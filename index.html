@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本 / JAPAN — 映画のような旅の体験</title>
+  <meta name="description" content="日本の心を旅する。不朽の侍の精神、神聖な風景、そして現代の驚異が織りなす没入型の旅路。">
+  
+  <!-- Favicon Emblem -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23B83A32'/></svg>">
+
+  <!-- Google Fonts Preconnect & High-performance Font Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+JP:wght@300;400;600;700;900&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css?v=3.9">
+  <link rel="stylesheet" href="css/intro.css?v=6.1">
+  <link rel="stylesheet" href="css/components.css?v=8.1">
+  <link rel="stylesheet" href="css/bushido-modal.css?v=1.3">
+  <link rel="stylesheet" href="css/destinations-pro.css?v=1.3">
+</head>
+<body class="intro-active">
+
+  <!-- ========================================================================
+       OPENING SCENE: FULLSCREEN CINEMATIC INTRO
+       ======================================================================== -->
+  <div id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="日本へようこそ イントロダクション">
+    <!-- Atmospheric Mist & Smoke Canvas -->
+    <canvas id="intro-canvas" class="intro-canvas"></canvas>
+    <div class="intro-texture"></div>
+    <div class="intro-mist-layer"></div>
+
+    <!-- Voice-over narration (plays through drawing → slash → samurai reveal until skip) -->
+    <audio id="intro-voice-over" src="wp-content/themes/kanji_2026/assets/audio/hayato-intro-voice.mp3" preload="auto"></audio>
+
+    <!-- Intro Interactive Controls -->
+    <div class="intro-controls-bar">
+      <button id="skip-intro-btn" class="skip-intro-btn" type="button" aria-label="イントロをスキップ" onclick="if(window.japanIntro){window.japanIntro.skip();}">
+        <span data-i18n="skipIntro">スキップ</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Start with Sound Modal Prompt -->
+    <div id="intro-start-modal" class="intro-start-modal">
+      <button id="btn-start-sound" class="btn-start-sound" aria-label="音声とともに体験を始める">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <span data-i18n="enterWithSound">音声付きで入場</span>
+      </button>
+      <span class="start-hint-text" data-i18n="startHint">または画面をクリックして入場</span>
+    </div>
+
+    <!-- Intro Stage: Calligraphy & Samurai -->
+    <div class="intro-stage">
+      
+      <!-- Scene B: Japanese Calligraphy Stroke Drawing (日本) -->
+      <div class="calligraphy-wrapper">
+        <svg class="calligraphy-svg" viewBox="0 0 950 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Japanese Calligraphy Nihon">
+          <!-- Character 1: 日 (Sun / Day) - 4 Authentic Calligraphic Strokes -->
+          <g id="kanji-ni-strokes">
+            <!-- Stroke 1: Left vertical brush down -->
+            <path class="brush-stroke" d="M 170, 95 C 172, 175 168, 275 162, 375" />
+            
+            <!-- Stroke 2: Top horizontal bar curving down right side with hook -->
+            <path class="brush-stroke" d="M 168, 102 L 330, 102 C 345, 102 348, 115 344, 130 L 334, 378" />
+            
+            <!-- Stroke 3: Middle horizontal bar -->
+            <path class="brush-stroke" d="M 170, 238 L 334, 238" />
+            
+            <!-- Stroke 4: Bottom closing horizontal bar -->
+            <path class="brush-stroke" d="M 160, 374 L 342, 374" />
+          </g>
+
+          <!-- Character 2: 本 (Origin / Basis) - 5 Authentic Calligraphic Strokes -->
+          <g id="kanji-hon-strokes">
+            <!-- Stroke 1: Top horizontal crossbar -->
+            <path class="brush-stroke" d="M 450, 168 L 740, 168" />
+            
+            <!-- Stroke 2: Central vertical spine (Tate) with calligraphic terminal taper -->
+            <path class="brush-stroke stroke-accent" d="M 595, 65 L 595, 410 C 595, 420 588, 420 580, 412" />
+            
+            <!-- Stroke 3: Sweeping left diagonal brush flare (Harai) -->
+            <path class="brush-stroke" d="M 588, 175 C 555, 255 490, 345 405, 395" />
+            
+            <!-- Stroke 4: Sweeping right diagonal brush flare (Harai) -->
+            <path class="brush-stroke" d="M 602, 175 C 635, 255 700, 345 785, 398" />
+            
+            <!-- Stroke 5: Lower horizontal crossbar -->
+            <path class="brush-stroke" d="M 495, 290 L 695, 290" />
+          </g>
+
+          <!-- Ink Splatters Bursting at Stroke Endpoints -->
+          <g class="ink-splatter-group" fill="#F5F0E8">
+            <circle cx="162" cy="382" r="3.5" opacity="0.6"/>
+            <circle cx="156" cy="392" r="2" opacity="0.4"/>
+            <circle cx="334" cy="386" r="3" opacity="0.5"/>
+            <circle cx="580" cy="420" r="4" fill="#B83A32" opacity="0.7"/>
+            <circle cx="572" cy="432" r="2.5" fill="#B83A32" opacity="0.5"/>
+            <circle cx="400" cy="402" r="3.2" opacity="0.6"/>
+            <circle cx="792" cy="406" r="3.2" opacity="0.6"/>
+          </g>
+        </svg>
+
+        <!-- Red Hanko Seal Stamp (日本之印) -->
+        <div id="intro-hanko" class="intro-hanko" aria-label="Vermilion Hanko Seal: Nihon no In">
+          <span>日本<br>之印</span>
+        </div>
+
+        <!-- Full Japanese Greeting Typography: 「こんにちは、日本へようこそ」 -->
+        <div class="greeting-text-container">
+          <h2 id="greeting-japanese" class="greeting-japanese">
+            「こんにちは、日本へようこそ」
+          </h2>
+          <p id="greeting-english" class="greeting-english" data-i18n="greetingSub">
+            心洗われる美しき旅へ
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote subtitle: sibling of the calligraphy wrapper (NOT inside it) so
+         it survives the .faded fade-out at the slash and keeps running with the
+         voice-over until the intro ends -->
+    <p id="intro-quote-sub" class="intro-quote-sub intro-quote-sub--stage" aria-live="polite"></p>
+
+    <!-- Scene C: Fullscreen Cinematic Video Scene (Covers entire screen edge-to-edge) -->
+    <div id="samurai-silhouette-container" class="samurai-silhouette-container samurai-image-scene" aria-label="戦いの構えをとる侍">
+      <div class="samurai-photo-backdrop">
+        <video 
+          id="samurai-hero-photo"
+          class="samurai-hero-photo samurai-hero-video" 
+          autoplay 
+          muted 
+          playsinline 
+          preload="auto"
+          poster="assets/images/samurai-hero.jpg"
+        >
+          <source src="wp-content/themes/kanji_2026/assets/img/1792994888-4bcba1e8.mp4" type="video/mp4">
+          <source src="assets/videos/japan-travel-hero.mp4" type="video/mp4">
+        </video>
+        <div class="samurai-photo-vignette"></div>
+        <div class="samurai-photo-ember-glow"></div>
+      </div>
+
+      <!-- Anime Lens Flare & Blade Spark on Katana -->
+      <div id="samurai-blade-flare" class="samurai-blade-flare">
+        <div class="blade-flare-core"></div>
+      </div>
+
+      <!-- Cinematic Japanese Subtitle Overlay -->
+      <div class="samurai-caption-overlay">
+        <span class="samurai-caption-tag" data-i18n="samuraiTag">武士の魂</span>
+        <h3 class="samurai-caption-title" data-i18n="samuraiCaptionTitle">侍の覚悟</h3>
+        <button type="button" class="samurai-enter-btn skip-intro-btn" id="samurai-enter-btn" aria-label="日本を探索する" onclick="if(window.japanIntro){window.japanIntro.skip();}">
+          <span data-i18n="exploreJapanBtn">日本を旅する</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Katana Sword Slash Beam Trail -->
+    <svg id="sword-slash-beam" class="sword-slash-beam" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <line class="slash-path-line" x1="-100" y1="900" x2="1100" y2="100"/>
+    </svg>
+
+    <!-- White Flash Impact Screen -->
+    <div id="slash-flash-screen" class="slash-flash-screen"></div>
+
+    <!-- Screen Split Halves (Cinematic Wipe) -->
+    <div id="split-screen-wrapper" class="split-screen-wrapper">
+      <div class="split-half split-top"></div>
+      <div class="split-half split-bottom"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MAIN SITE HEADER & NAVIGATION
+       ======================================================================== -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <!-- Brand Emblem -->
+      <a href="#hero" class="brand-logo" aria-label="日本トラベル ホームページ">
+        <span class="japan-flag" aria-hidden="true"></span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-wrapper" role="navigation" aria-label="メインナビゲーション">
+        <ul class="nav-desktop">
+          <li><a href="#hero" class="nav-link active" data-i18n="navPrologue">序章</a></li>
+          <li><a href="#samurai" class="nav-link" data-i18n="navSamurai">侍の精神</a></li>
+          <li><a href="#destinations" class="nav-link" data-i18n="navDestinations">厳選の地</a></li>
+          <li><a href="#culture" class="nav-link" data-i18n="navCulture">日本文化</a></li>
+          <li><a href="#geisha" class="nav-link" data-i18n="navGeisha">芸者の美学</a></li>
+          <li><a href="#brush-studio" class="nav-link" data-i18n="navStudio">書道体験</a></li>
+        </ul>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Procedural Audio Toggle -->
+        <button id="audio-toggle-btn" class="audio-toggle-btn" aria-label="音声の切り替え">
+          <svg class="sound-wave-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+          <span class="audio-status-text">音声 ON</span>
+        </button>
+
+        <!-- Replay Intro Button -->
+        <button type="button" id="header-replay-btn" class="replay-intro-btn" aria-label="イントロをもう一度再生">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+          </svg>
+          <span data-i18n="replayBtn">再見</span>
+        </button>
+
+        <!-- Language Switcher Dropdown -->
+        <div class="lang-dropdown-wrapper" id="lang-dropdown-wrapper">
+          <button type="button" id="lang-toggle-btn" class="lang-toggle-btn" aria-expanded="false" aria-haspopup="true" aria-label="Change language / 言語切り替え">
+            <svg class="lang-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span class="lang-current-label">日本語</span>
+            <svg class="lang-arrow" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </button>
+          <div class="lang-dropdown-menu" id="lang-dropdown-menu" role="menu">
+            <button type="button" class="lang-option active" data-lang="ja" role="menuitem">
+              <svg class="lang-flag-svg" viewBox="0 0 900 600" aria-hidden="true"><rect width="900" height="600" fill="#ffffff"/><circle cx="450" cy="300" r="180" fill="#bc002d"/></svg>
+              <span class="lang-name">日本語</span>
+              <span class="lang-check">✓</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="en" role="menuitem">
+              <svg class="lang-flag-svg" viewBox="0 0 60 30" aria-hidden="true"><clipPath id="lang-uk-clip"><path d="M0,0 v30 h60 v-30 z"/></clipPath><g clip-path="url(#lang-uk-clip)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="3"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+              <span class="lang-name">English</span>
+              <span class="lang-check">✓</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="vi" role="menuitem">
+              <svg class="lang-flag-svg" viewBox="0 0 900 600" aria-hidden="true"><rect width="900" height="600" fill="#da251d"/><polygon points="450,150 487,264 607,264 510,334 547,448 450,378 353,448 390,334 293,264 413,264" fill="#ffde00"/></svg>
+              <span class="lang-name">Tiếng Việt</span>
+              <span class="lang-check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="ナビゲーションメニューの開閉" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- ======================================================================
+         SECTION 1: HERO — DISCOVER THE SPIRIT OF JAPAN
+         ====================================================================== -->
+    <section id="hero" class="hero-section" aria-label="序章：日本の心を旅する">
+      <!-- Cinematic Background Video (Default Interface Backdrop) -->
+      <div class="hero-background">
+        <!-- Persistent High-Res Background Image — ALWAYS visible immediately! -->
+        <img 
+          src="assets/images/samurai-hero.jpg" 
+          alt="Majestic Samurai in Ancient Japan" 
+          class="hero-bg-image"
+          id="hero-bg-image"
+        >
+        <video 
+          id="hero-bg-video"
+          class="hero-bg-video" 
+          autoplay 
+          muted 
+          loop 
+          playsinline 
+          preload="auto"
+          poster="assets/images/samurai-hero.jpg"
+        >
+          <source src="assets/videos/japan-travel-hero.mp4" type="video/mp4">
+          <source src="wp-content/themes/kanji_2026/assets/img/1792994888-4bcba1e8.mp4" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay"></div>
+        <div class="hero-overlay-vignette"></div>
+      </div>
+
+      <div class="container hero-content">
+        <!-- Metadata Badges -->
+        <div class="hero-metadata">
+          <span class="label-pill">
+            <span class="dot"></span>
+            <span data-i18n="heroChapter">第一章 / 序章</span>
+          </span>
+          <span>35.3606° N, 138.7274° E</span>
+          <span class="hanko-stamp">日本</span>
+        </div>
+
+        <!-- Hero Titles -->
+        <div class="hero-title-group">
+          <div class="hero-subtitle-jp" data-i18n="heroSubtitle">日本の心を旅する</div>
+          <h1 class="hero-title" data-i18n="heroTitle">
+            日本の心を<br>
+            旅する
+          </h1>
+        </div>
+
+        <p class="hero-description" data-i18n="heroDesc">
+          古の侍の城郭から、光り輝くネオンの都市まで。
+          研ぎ澄まされた禅の静寂と、息をのむ現代の技が息づく神聖な地への旅路。
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <a href="#destinations" class="btn-primary">
+            <span data-i18n="heroBtnDestinations">名所を巡る</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <a href="#samurai" class="btn-secondary">
+            <span data-i18n="heroBtnSamurai">侍の道を知る</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Animated Scroll Indicator -->
+      <div class="hero-scroll-indicator">
+        <div class="scroll-line"></div>
+        <span data-i18n="heroScroll">スクロールして探索</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: SAMURAI MOTION — THE WAY OF THE SAMURAI (侍の精神)
+         ====================================================================== -->
+    <section id="samurai" class="samurai-section" aria-label="侍の精神と不滅の美学">
+      <div class="samurai-backdrop">
+        <img 
+          src="https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=2000&q=85" 
+          alt="Moody mist drifting through ancient Japanese mountain bamboo forests" 
+          class="samurai-bg-image"
+          loading="lazy"
+        >
+        <div class="samurai-fog-layer"></div>
+      </div>
+
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-tag" data-i18n="samuraiSectionTag">伝統と規律</div>
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="samuraiSectionTitle">侍の道・不滅の精神</h2>
+            <span class="section-title-jp" data-i18n="samuraiSectionSubtitle">侍の精神と不滅の美学</span>
+          </div>
+        </div>
+
+        <!-- 2-Column Grid: Diorama & Editorial -->
+        <div class="samurai-grid-layout">
+          
+          <!-- Interactive Parallax Diorama featuring the Samurai Warrior -->
+          <div class="samurai-diorama" role="img" aria-label="Cinematic Samurai warrior in full armor before Japanese fortress">
+            <img src="assets/images/samurai-hero.jpg" alt="Samurai warrior in battle armor holding katana before Japanese fortress" class="diorama-hero-image">
+            <div class="diorama-image-overlay"></div>
+            <!-- Floating Sakura Petals -->
+            <div class="floating-petals">
+              <div class="petal" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+              <div class="petal" style="top: 25%; left: 70%; animation-delay: 2.5s;"></div>
+              <div class="petal" style="top: 5%; left: 50%; animation-delay: 5s;"></div>
+            </div>
+          </div>
+
+          <!-- Right Column: Editorial Content Column -->
+          <div class="samurai-editorial">
+            <div class="bushido-virtues-badge">
+              <span data-i18n="samuraiPhilosophyBadge">武士の道・武士道精神</span>
+            </div>
+
+            <blockquote class="samurai-quote" data-i18n="samuraiQuote">
+              「真の勝利とは、己に打ち克つこと。刃は激しき炎より鍛えられ、静寂なる自制をもて振るわれる。」
+            </blockquote>
+
+            <p class="samurai-text" data-i18n="samuraiText">
+              単なる神話や映画の伝説を超えて、歴史上の侍たちは学者であり、歌人、禅の実践者、そして優れた戦略家でした。7世紀以上にわたり、彼らの重んじた「武士道」の精神は、日本の美意識、刀鍛冶、城郭建築、そして人々の高潔な道徳観を育みました。
+            </p>
+
+            <!-- The 7 Virtues of Bushido -->
+            <div class="virtues-grid">
+              <div class="virtue-card">
+                <span class="virtue-kanji">義</span>
+                <span class="virtue-name" data-i18n="virtueGiName">義（GI）</span>
+                <p class="virtue-meaning" data-i18n="virtueGiMeaning">正義と道義</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">勇</span>
+                <span class="virtue-name" data-i18n="virtueYuName">勇（YU）</span>
+                <p class="virtue-meaning" data-i18n="virtueYuMeaning">勇気と果敢</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">仁</span>
+                <span class="virtue-name" data-i18n="virtueJinName">仁（JIN）</span>
+                <p class="virtue-meaning" data-i18n="virtueJinMeaning">慈悲と思いやり</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">礼</span>
+                <span class="virtue-name" data-i18n="virtueReiName">礼（REI）</span>
+                <p class="virtue-meaning" data-i18n="virtueReiMeaning">礼節と敬意</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">誠</span>
+                <span class="virtue-name" data-i18n="virtueMakotoName">誠（MAKOTO）</span>
+                <p class="virtue-meaning" data-i18n="virtueMakotoMeaning">誠実と至誠</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">名誉</span>
+                <span class="virtue-name" data-i18n="virtueMeiyoName">名誉（MEIYO）</span>
+                <p class="virtue-meaning" data-i18n="virtueMeiyoMeaning">名誉と誇り</p>
+              </div>
+              <div class="virtue-card">
+                <span class="virtue-kanji">忠義</span>
+                <span class="virtue-name" data-i18n="virtueChugiName">忠義（CHUGI）</span>
+                <p class="virtue-meaning" data-i18n="virtueChugiMeaning">忠誠と献身</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Section Centered Action CTA (Căn giữa toàn bộ section & Mapping tới trang Blog Grid Samurai) -->
+        <div class="samurai-section-cta">
+          <a href="/?cat=3" class="btn-primary samurai-read-more-btn" id="samurai-read-more-btn" aria-label="Xem các bài viết về Samurai" data-wp-cat-id="3">
+            <span data-i18n="samuraiReadMoreBtn">武士道について詳しく見る</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: TRAVEL DESTINATIONS — 3 FEATURED JOURNEYS (厳選された旅路)
+         ====================================================================== -->
+    <section id="destinations" class="destinations-section" aria-label="厳選された日本の旅路">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-tag" data-i18n="destSectionTag">厳選された日本の名所</div>
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="destSectionTitle">日本の至宝・10大名所</h2>
+            <span class="section-title-jp" data-i18n="destSectionSubtitle">映画のような空撮映像、絶品郷土美食、悠久の歴史スポット</span>
+          </div>
+        </div>
+
+        <!-- Carousel Wrapper -->
+        <div class="destinations-carousel-wrapper">
+          <!-- Top Bar with Counter -->
+          <div class="slider-top-bar">
+            <div class="slider-counter" aria-live="polite">
+              <span class="current-num">01</span> / 03
+            </div>
+          </div>
+
+          <!-- Carousel Track Container -->
+          <div class="destinations-track-container">
+            <div id="destinations-track" class="destinations-track">
+              
+              <!-- SLIDE 1: KYOTO (Ancient Elegance) -->
+              <article class="destination-slide" id="slide-kyoto">
+                <div class="slide-image-box">
+                  <img 
+                    src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=85" 
+                    alt="Yasaka Pagoda glowing at twilight in the historical streets of Kyoto" 
+                    class="slide-image"
+                    loading="lazy"
+                  >
+                  <div class="slide-image-overlay"></div>
+                  <div class="slide-kanji-watermark">京都</div>
+                </div>
+
+                <div class="slide-content-box">
+                  <div class="slide-location-meta">
+                    <span class="dot"></span>
+                    <span data-i18n="kyotoRegion">01 / 関西地方</span>
+                  </div>
+                  <div class="slide-title-wrap">
+                    <h3 class="slide-title" data-i18n="kyotoTitle">京都</h3>
+                    <div class="slide-subtitle-jp" data-i18n="kyotoSubtitle">千年の都・古都の雅</div>
+                  </div>
+                  <p class="slide-description" data-i18n="kyotoDesc">
+                    千年の雅が息づく古都へ。伏見稲荷大社の朱色の千本鳥居をくぐり、祇園の灯籠揺れる石畳を歩き、二千を超える寺社仏閣と静謐な禅の庭園で時を超えた美を体感してください。
+                  </p>
+                  <ul class="slide-highlights-list" aria-label="京都の見どころ">
+                    <li class="highlight-tag" data-i18n="kyotoHl1">伏見稲荷大社</li>
+                    <li class="highlight-tag" data-i18n="kyotoHl2">嵐山 竹林の小径</li>
+                    <li class="highlight-tag" data-i18n="kyotoHl3">音羽山 清水寺</li>
+                    <li class="highlight-tag" data-i18n="kyotoHl4">祇園のお茶屋</li>
+                  </ul>
+                  <div class="slide-actions">
+                    <button class="btn-primary" data-destination-trigger="kyoto">
+                      <span data-i18n="kyotoBtn">京都を詳しく見る</span>
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <!-- SLIDE 2: TOKYO (Neon Energy) -->
+              <article class="destination-slide" id="slide-tokyo">
+                <div class="slide-image-box">
+                  <img 
+                    src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=85" 
+                    alt="Tokyo metropolis illuminated with vibrant neon lights and Tokyo Tower skyline" 
+                    class="slide-image"
+                    loading="lazy"
+                  >
+                  <div class="slide-image-overlay"></div>
+                  <div class="slide-kanji-watermark">東京</div>
+                </div>
+
+                <div class="slide-content-box">
+                  <div class="slide-location-meta">
+                    <span class="dot"></span>
+                    <span data-i18n="tokyoRegion">02 / 関東地方</span>
+                  </div>
+                  <div class="slide-title-wrap">
+                    <h3 class="slide-title" data-i18n="tokyoTitle">東京</h3>
+                    <div class="slide-subtitle-jp" data-i18n="tokyoSubtitle">伝統と未来が交差する街</div>
+                  </div>
+                  <p class="slide-description" data-i18n="tokyoDesc">
+                    躍動するネオンのエネルギーと、静けさに満ちた江戸の聖域が交錯する都市。渋谷スクランブル交差点、新宿の路地裏、そして明治神宮の神聖な杜の静けさが織りなす感動の体験。
+                  </p>
+                  <ul class="slide-highlights-list" aria-label="東京の見どころ">
+                    <li class="highlight-tag" data-i18n="tokyoHl1">渋谷交差点</li>
+                    <li class="highlight-tag" data-i18n="tokyoHl2">新宿思い出横丁</li>
+                    <li class="highlight-tag" data-i18n="tokyoHl3">浅草寺・雷門</li>
+                    <li class="highlight-tag" data-i18n="tokyoHl4">銀座の美食</li>
+                  </ul>
+                  <div class="slide-actions">
+                    <button class="btn-primary" data-destination-trigger="tokyo">
+                      <span data-i18n="tokyoBtn">東京を詳しく見る</span>
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <!-- SLIDE 3: MOUNT FUJI (Beyond the Clouds) -->
+              <article class="destination-slide" id="slide-fuji">
+                <div class="slide-image-box">
+                  <img 
+                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85" 
+                    alt="Mount Fuji serene reflection across alpine lake under morning mist" 
+                    class="slide-image"
+                    loading="lazy"
+                  >
+                  <div class="slide-image-overlay"></div>
+                  <div class="slide-kanji-watermark">富士山</div>
+                </div>
+
+                <div class="slide-content-box">
+                  <div class="slide-location-meta">
+                    <span class="dot"></span>
+                    <span data-i18n="fujiRegion">03 / 中部地方</span>
+                  </div>
+                  <div class="slide-title-wrap">
+                    <h3 class="slide-title" data-i18n="fujiTitle">富士山</h3>
+                    <div class="slide-subtitle-jp" data-i18n="fujiSubtitle">雲上の霊峰・不朽の象徴</div>
+                  </div>
+                  <p class="slide-description" data-i18n="fujiDesc">
+                    標高3,776メートル、天高くそびえる日本の美と信仰の象徴。河口湖に映る秀麗な逆さ富士を愛で、天然露天風呂に浸かり、新倉山浅間公園の忠霊塔から朝日に染まる絶景をお楽しみください。
+                  </p>
+                  <ul class="slide-highlights-list" aria-label="富士山の見どころ">
+                    <li class="highlight-tag" data-i18n="fujiHl1">河口湖</li>
+                    <li class="highlight-tag" data-i18n="fujiHl2">新倉山 忠霊塔</li>
+                    <li class="highlight-tag" data-i18n="fujiHl3">箱根温泉</li>
+                    <li class="highlight-tag" data-i18n="fujiHl4">富士五湖</li>
+                  </ul>
+                  <div class="slide-actions">
+                    <button class="btn-primary" data-destination-trigger="fuji">
+                      <span data-i18n="fujiBtn">富士山を詳しく見る</span>
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Nút mũi tên chuyển slide đặt ở đáy ảnh -->
+            <div class="slider-navigation-btns">
+              <button id="slider-prev-btn" class="slider-arrow-btn" aria-label="前のスライドへ">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              </button>
+              <button id="slider-next-btn" class="slider-arrow-btn" aria-label="次のスライドへ">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pagination Indicator Dots -->
+          <div class="slider-pagination" role="tablist" aria-label="スライド選択">
+            <button class="slider-dot active" role="tab" aria-selected="true" aria-label="スライド 1: 京都"></button>
+            <button class="slider-dot" role="tab" aria-selected="false" aria-label="スライド 2: 東京"></button>
+            <button class="slider-dot" role="tab" aria-selected="false" aria-label="スライド 3: 富士山"></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: JAPANESE CULTURE — MORE THAN A DESTINATION (文化と歴史)
+         ====================================================================== -->
+    <section id="culture" class="culture-section" aria-label="日本の文化と歴史">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-tag" data-i18n="cultureSectionTag">文化の真髄</div>
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="cultureSectionTitle">心に響く日本の伝統</h2>
+            <span class="section-title-jp" data-i18n="cultureSectionSubtitle">魂に響く日本の伝統と美意識</span>
+          </div>
+        </div>
+
+        <!-- Alternating Editorial Rows -->
+        <div class="culture-grid">
+          
+          <!-- Pillar 1: The Way of Tea (茶道 - Chado) -->
+          <article class="culture-row">
+            <div class="culture-media">
+              <img 
+                src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1000&q=85" 
+                alt="Traditional Japanese Matcha green tea bowl prepared with bamboo whisk" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">茶道</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture1Cat">01 / 禅の静寂と心</span>
+              <h3 class="culture-title" data-i18n="culture1Title">茶道</h3>
+              <div class="culture-title-jp" data-i18n="culture1Subtitle">茶道・一期一会</div>
+              <p class="culture-body" data-i18n="culture1Body1">
+                千利休が大成した16世紀の禅の思想に根ざす「茶道」は、抹茶を点てる所作を通じて今この瞬間に心を研ぎ澄ます瞑想の儀式です。「和・敬・清・寂」の四規に基づく精神が息づいています。
+              </p>
+              <p class="culture-body" style="color: var(--color-gold-accent);" data-i18n="culture1Body2">
+                「一期一会」— 一生に一度の出会いとして、誠心誠意のおもてなしを。
+              </p>
+            </div>
+          </article>
+
+          <!-- Pillar 2: Sakura Season (桜 - Hanami) -->
+          <article class="culture-row reverse">
+            <div class="culture-media">
+              <img 
+                src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=85" 
+                alt="Cherry blossoms in radiant pink bloom framing traditional wooden architecture" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">桜</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture2Cat">02 / 自然と無常の美</span>
+              <h3 class="culture-title" data-i18n="culture2Title">桜花と花見</h3>
+              <div class="culture-title-jp" data-i18n="culture2Subtitle">桜花と「もののあわれ」</div>
+              <p class="culture-body" data-i18n="culture2Body1">
+                春、日本列島を桜前線が駆け抜けます。単なる景観の美しさを超え、桜は散りゆく美しさに心を寄せる「もののあわれ」の情緒を体現しています。
+              </p>
+              <p class="culture-body" data-i18n="culture2Body2">
+                千年以上にわたり、天皇、歌人、庶民に至るまで、満開の桜の下に集い「花見」を楽しむ伝統が大切に受け継がれています。
+              </p>
+            </div>
+          </article>
+
+          <!-- Pillar 3: Traditional Architecture (和風建築) -->
+          <article class="culture-row">
+            <div class="culture-media">
+              <img 
+                src="wp-content/themes/kanji_2026/assets/img/machiya (2).png" 
+                alt="Historic Japanese wooden shrine architecture with sloping curved eaves" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">建築</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture3Cat">03 / 木組の技と調和</span>
+              <h3 class="culture-title" data-i18n="culture3Title">和風建築</h3>
+              <div class="culture-title-jp" data-i18n="culture3Subtitle">木と紙の呼吸・和風建築</div>
+              <p class="culture-body" data-i18n="culture3Body1">
+                一本の釘も使わずに組み上げられる五重塔や町家は、地震の揺れを逃す精緻な「木組」の技によって支えられています。障子や襖は室内と庭園の四季を優美につなぎます。
+              </p>
+              <p class="culture-body" data-i18n="culture3Body2">
+                宮島の厳島神社から京都の静穏な楼閣まで、建築は自然の環境と調和しながら呼吸を共にしています。
+              </p>
+            </div>
+          </article>
+
+          <!-- Pillar 4: Japanese Calligraphy (書道 - Shodo) -->
+          <article class="culture-row reverse">
+            <div class="culture-media">
+              <img 
+                src="wp-content/themes/kanji_2026/assets/img/iStock-998372398-1-1.jpg" 
+                alt="Artist hand guiding Japanese calligraphy brush with deep sumi ink on textured washi paper" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">書道</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture4Cat">04 / 筆墨の芸術</span>
+              <h3 class="culture-title" data-i18n="culture4Title">書道</h3>
+              <div class="culture-title-jp" data-i18n="culture4Subtitle">筆と墨の一瞬・書道</div>
+              <p class="culture-body" data-i18n="culture4Body1">
+                「書道」は単に文字を書くことではなく、精神を集中させる動の瞑想です。和紙に墨が触れた瞬間、決して消すことも修正することもできません。一筆一筆に書き手の呼吸、リズム、心の境地が宿ります。
+              </p>
+              <p class="culture-body" data-i18n="culture4Body2">
+                文房四宝と呼ばれる「筆」「墨」「硯」「紙」を通じて生み出される、一瞬の美の結晶です。
+              </p>
+            </div>
+          </article>
+
+          <!-- Pillar 5: Samurai History & Bushido -->
+          <article class="culture-row">
+            <div class="culture-media">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Group-Samurai-Scholars-Nagasaki-1864-Ueno-Hikoma.png" 
+                alt="Forged Japanese Katana blade and lacquered scabbard with gold crest details" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">武道</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture5Cat">05 / 名誉と鋼の魂</span>
+              <h3 class="culture-title" data-i18n="culture5Title">日本刀と武士の歴史</h3>
+              <div class="culture-title-jp" data-i18n="culture5Subtitle">不滅の誇り・日本刀と甲冑</div>
+              <p class="culture-body" data-i18n="culture5Body1">
+                日本刀は「武士の魂」と称されました。玉鋼を何度も折り返し鍛錬することで、強靭な硬さと折れない柔軟性を併せ持つ至高の美が生まれます。
+              </p>
+              <p class="culture-body" data-i18n="culture5Body2">
+                今日でも、居合道や剣道などの古武道、金沢や会津などの歴史ある城下町、そして礼節を重んじる心の中に侍の誇りが受け継がれています。
+              </p>
+            </div>
+          </article>
+
+          <!-- Pillar 6: Geisha Arts (芸道 - Geido) -->
+          <article class="culture-row reverse">
+            <div class="culture-media">
+              <img 
+                src="images/geisha/gion-dance.jpg" 
+                alt="A maiko performing traditional Kyomai dance with elegant sleeve gestures" 
+                class="culture-image"
+                loading="lazy"
+              >
+              <div class="culture-stamp-watermark">芸道</div>
+            </div>
+            <div class="culture-text-col">
+              <span class="culture-category-label" data-i18n="culture6Cat">06 / 花街の雅と修練</span>
+              <h3 class="culture-title" data-i18n="culture6Title">芸者の世界</h3>
+              <div class="culture-title-jp" data-i18n="culture6Subtitle">一生分の稽古・一瞬の所作</div>
+              <p class="culture-body" data-i18n="culture6Body1">
+                京都·祇園の花街で脈々と受け継がれる芸の世界。舞、三味線、茶道、華道、会話に至るまで、幼い頃から研鑽を積み「おもてなし」の美学を究めます。
+              </p>
+              <p class="culture-body" data-i18n="culture6Body2">
+                お茶屋が結ぶ「一期一会」の一夜 — 華やかさの裏に、日々の厳しい稽古と伝統への献身があります。
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: GEISHA — THE AESTHETICS OF GRACE (芸者の美学)
+         ====================================================================== -->
+    <section id="geisha" class="geisha-section" aria-label="芸者の美学と花街の文化">
+      <!-- Background: Hanamikoji, the old teahouse street of Gion -->
+      <div class="geisha-backdrop">
+        <img
+          src="images/geisha/hanamikoji.jpg"
+          alt="祇園花見小路の町家が続く石畳 — phố trà 花見小路 ở Gion"
+          class="geisha-bg-image"
+          width="2400" height="1800" decoding="async">
+        <div class="geisha-haze-layer"></div>
+      </div>
+
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-tag" data-i18n="geishaSectionTag">花街の美学</div>
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="geishaSectionTitle">芸者・雅の極み</h2>
+            <span class="section-title-jp" data-i18n="geishaSectionSubtitle">祇園の石畳に息づく、一期一会の美と所作</span>
+          </div>
+        </div>
+
+        <!-- 2-Column Grid: Portrait & Editorial -->
+        <div class="geisha-grid-layout">
+
+          <!-- Maiko in motion (cinematic loop) -->
+          <div class="geisha-portrait" role="img" aria-label="祇園の舞妓の映像">
+            <video
+              class="geisha-portrait-media geisha-portrait-video"
+              poster="images/geisha/maiko-portrait.jpg"
+              autoplay muted loop playsinline preload="metadata"
+              aria-label="祇園の舞妓 — maiko tại Gion">
+              <source src="wp-content/themes/kanji_2026/assets/video/gettyimages-1495469032-640_adpp.mp4" type="video/mp4">
+            </video>
+            <div class="geisha-portrait-overlay"></div>
+            <span class="geisha-portrait-seal">祇園</span>
+            <!-- Lantern motes -->
+            <div class="geisha-motes" aria-hidden="true">
+              <span class="geisha-mote" style="top: 18%; left: 22%; animation-delay: 0s;"></span>
+              <span class="geisha-mote" style="top: 34%; left: 74%; animation-delay: 2.4s;"></span>
+              <span class="geisha-mote" style="top: 9%;  left: 52%; animation-delay: 4.8s;"></span>
+            </div>
+          </div>
+
+          <!-- Editorial column -->
+          <div class="geisha-editorial">
+            <div class="geisha-badge">
+              <span data-i18n="geishaPhilosophyBadge">花街の心・一期一会</span>
+            </div>
+
+            <blockquote class="geisha-quote" data-i18n="geishaQuote">
+              「一瞬の所作に、一生分の稽古を。」— 花街に流れる不易の心
+            </blockquote>
+
+            <p class="geisha-lead-text" data-i18n="geishaLead">
+              京都・祇園の花街で脈々と受け継がれる芸者の世界は、単なる華やかさではありません。幼い頃から研鑽を積み、舞・三味線・茶道・華道・会話に至るまで、あらゆる芸を究めることで「おもてなし」という美学を完成させます。
+            </p>
+
+            <!-- Four arts of the flower district -->
+            <div class="geisha-arts-grid">
+              <div class="geisha-art-card">
+                <img class="geisha-art-photo" src="images/geisha/gion-dance.jpg" alt="京舞を舞う芸妓" loading="lazy" decoding="async">
+                <span class="geisha-art-kanji">舞</span>
+                <span class="geisha-art-name" data-i18n="geishaPillar1Title">京舞</span>
+                <p class="geisha-art-meaning" data-i18n="geishaPillar1BodyShort">扇と袖で四季を描く、井上流の京舞。</p>
+              </div>
+              <div class="geisha-art-card">
+                <img class="geisha-art-photo" src="images/geisha/maiko-portrait.jpg" alt="舞妓の着物と結髪" loading="lazy" decoding="async">
+                <span class="geisha-art-kanji">装</span>
+                <span class="geisha-art-name" data-i18n="geishaPillar2Title">着物と結髪</span>
+                <p class="geisha-art-meaning" data-i18n="geishaPillar2BodyShort">西陣織の着物と、季節を映す簪。</p>
+              </div>
+              <div class="geisha-art-card">
+                <img class="geisha-art-photo" src="images/geisha/shamisen-2.jpg" alt="三味線を奏でる芸妓" loading="lazy" decoding="async">
+                <span class="geisha-art-kanji">音</span>
+                <span class="geisha-art-name" data-i18n="geishaPillar3Title">三味線と箏</span>
+                <p class="geisha-art-meaning" data-i18n="geishaPillar3BodyShort">置屋で舞・三味線・作法を日々磨く。</p>
+              </div>
+              <div class="geisha-art-card">
+                <img class="geisha-art-photo" src="images/geisha/gion-corner.jpg" alt="祇園のお座敷の舞台" loading="lazy" decoding="async">
+                <span class="geisha-art-kanji">客</span>
+                <span class="geisha-art-name" data-i18n="geishaPillar4Title">お座敷文化</span>
+                <p class="geisha-art-meaning" data-i18n="geishaPillar4BodyShort">お茶屋が結ぶ、一期一会の一夜。</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Centered CTA (same pattern as the Samurai section) -->
+        <div class="geisha-section-cta">
+          <a href="/?cat=4" class="btn-primary geisha-read-more-btn" id="geisha-read-more-btn" aria-label="芸者・花街の記事を読む" data-wp-cat-id="4">
+            <span data-i18n="geishaCtaBtn">芸者の世界をもっと詳しく見る</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: INTERACTIVE CALLIGRAPHY STUDIO — BRUSH OF THE MASTER
+         ====================================================================== -->
+    <section id="brush-studio" class="brush-studio-section" aria-label="バーチャル書道体験">
+      <div class="container">
+        
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="section-tag" data-i18n="studioSectionTag">体験型工房</div>
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="studioSectionTitle">名匠の筆使い</h2>
+            <span class="section-title-jp" data-i18n="studioSectionSubtitle">バーチャル書道体験・あなたの筆跡</span>
+          </div>
+        </div>
+
+        <!-- Studio Area: Canvas + Controls -->
+        <div class="studio-container">
+          <!-- Washi Canvas -->
+          <div class="studio-canvas-area" role="region" aria-label="Interactive Calligraphy Canvas">
+            <canvas id="calligraphy-canvas"></canvas>
+            <div class="canvas-watermark">和</div>
+          </div>
+
+          <!-- Studio Controls Sidebar -->
+          <div class="studio-controls">
+            <div>
+              <h3 class="controls-group-title" data-i18n="studioColorTitle">墨の色</h3>
+              <div class="ink-color-picker" role="radiogroup" aria-label="墨の色を選択">
+                <button class="ink-btn ink-black active" data-color="#121314" title="純黒・濃墨" aria-label="黒墨"></button>
+                <button class="ink-btn ink-vermilion" data-color="#B83A32" title="朱墨・印泥" aria-label="朱墨"></button>
+                <button class="ink-btn ink-gold" data-color="#C5A059" title="金泥・金箔" aria-label="金墨"></button>
+              </div>
+
+              <h3 class="controls-group-title" data-i18n="studioStencilsTitle">お手本の漢字</h3>
+              <div class="presets-container" aria-label="漢字のお手本">
+                <button class="preset-btn" data-kanji="日" title="日（太陽・日々）">日</button>
+                <button class="preset-btn" data-kanji="本" title="本（根源・日本）">本</button>
+                <button class="preset-btn" data-kanji="侍" title="侍（武士の道）">侍</button>
+                <button class="preset-btn" data-kanji="和" title="和（調和・平和）">和</button>
+              </div>
+            </div>
+
+            <div class="action-buttons-group">
+              <button id="btn-splatter-ink" class="btn-secondary" style="width: 100%; justify-content: center;">
+                <span data-i18n="studioBtnSplatter">墨しぶき</span>
+              </button>
+              <button id="btn-clear-canvas" class="btn-primary" style="width: 100%; justify-content: center; background: rgba(25, 27, 32, 0.9); border-color: rgba(255, 255, 255, 0.2);">
+                <span data-i18n="studioBtnClear">和紙を清める</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       DESTINATION DETAIL MODAL
+       ======================================================================== -->
+  <div id="destination-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="名所の詳細">
+    <div class="modal-container">
+      <button id="modal-close-btn" class="modal-close-btn" aria-label="閉じる">&times;</button>
+      <img src="" alt="" class="modal-hero-image">
+      <div class="modal-body">
+        <div class="modal-meta" data-i18n="kyotoRegion">01 / 関西地方</div>
+        <h3 class="modal-title">京都 — 千年の古都</h3>
+        <div class="modal-subtitle-jp">千年の都・京都</div>
+        <p class="modal-text"></p>
+        
+        <div class="modal-info-grid">
+          <div class="modal-info-item">
+            <h4 data-i18n="modalLabelSeason">最適な季節</h4>
+            <p id="modal-season-text"></p>
+          </div>
+          <div class="modal-info-item">
+            <h4 data-i18n="modalLabelDuration">推奨滞在日数</h4>
+            <p id="modal-duration-text"></p>
+          </div>
+          <div class="modal-info-item" style="grid-column: 1 / -1;">
+            <h4 data-i18n="modalLabelRituals">おすすめの体験</h4>
+            <p id="modal-rituals-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-watermark-kanji">日本</div>
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand-col">
+          <div class="brand-logo">
+            <div class="brand-emblem">
+              <div class="brand-emblem-circle"></div>
+            </div>
+            <div class="brand-text">
+              <span class="brand-name">日本</span>
+              <span class="brand-sub" data-i18n="footerBrandSub">日本の心を旅する</span>
+            </div>
+          </div>
+          <p data-i18n="footerAbout">
+            日本の伝統工芸、悠久の侍の精神、そして日出ずる国の美しい名所を、映画のような映像美とともにお届けします。
+          </p>
+        </div>
+
+        <!-- Links Col 1 -->
+        <div>
+          <h4 class="footer-col-title" data-i18n="footerColDest">目的地</h4>
+          <ul class="footer-links">
+            <li><a href="#destinations" class="footer-link" data-i18n="footerLinkKyoto">京都 — 千年の古都</a></li>
+            <li><a href="#destinations" class="footer-link" data-i18n="footerLinkTokyo">東京 — 伝統と未来</a></li>
+            <li><a href="#destinations" class="footer-link" data-i18n="footerLinkFuji">富士山 — 聖なる霊峰</a></li>
+            <li><a href="#destinations" class="footer-link" data-i18n="footerLinkNara">奈良と金沢</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Col 2 -->
+        <div>
+          <h4 class="footer-col-title" data-i18n="footerColCulture">日本文化</h4>
+          <ul class="footer-links">
+            <li><a href="#culture" class="footer-link" data-i18n="footerLinkTea">茶道の精神 (一期一会)</a></li>
+            <li><a href="#culture" class="footer-link" data-i18n="footerLinkSakura">桜ともののあわれ</a></li>
+            <li><a href="#samurai" class="footer-link" data-i18n="footerLinkBushido">武士道精神</a></li>
+            <li><a href="#geisha" class="footer-link" data-i18n="navGeisha">芸者の美学</a></li>
+            <li><a href="#brush-studio" class="footer-link" data-i18n="footerLinkStudio">バーチャル書道工房</a></li>
+          </ul>
+        </div>
+
+        <!-- Experience Col -->
+        <div>
+          <h4 class="footer-col-title" data-i18n="footerColControls">メニュー</h4>
+          <ul class="footer-links">
+            <li>
+              <button class="replay-intro-btn footer-link" style="padding: 0; background: none; border: none;" data-i18n="footerReplay">
+                ↺ イントロを再見する
+              </button>
+            </li>
+            <li><a href="#hero" class="footer-link" data-i18n="footerTop">↑ ページ先頭へ</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Credits -->
+      <div class="footer-bottom">
+        <div data-i18n="footerCopyright">
+          &copy; 2026 日本トラベル体験。日本の伝統文化と映画的な映像美の融合。
+        </div>
+        <div class="text-muted" data-i18n="footerCredits">
+          洗練されたデザインと先端のウェブ技術で構築。
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Background Music -->
+  <audio id="intro-bg-music" preload="auto" loop>
+    <source src="assets/audio/onecinematicstudio-the-last-samurai-_-epic-japanese-bushido-cinematic-music-529053.mp3" type="audio/mpeg">
+  </audio>
+  <!-- Katana slash — preloaded so it fires instantly with no network delay -->
+  <audio id="katana-slash-audio" preload="auto">
+    <source src="assets/audio/daviddumaisaudio-sword-slash-and-swing-185432.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Scripts -->
+  <script src="js/audio.js?v=1.1"></script>
+  <script src="js/intro.js?v=1.4"></script>
+  <script src="js/slider.js?v=1.7"></script>
+  <script src="js/destinations-data.js?v=1.2"></script>
+  <script src="js/destinations-pro.js?v=1.5"></script>
+  <script src="js/brush-interactive.js"></script>
+  <script src="js/i18n.js?v=2.4"></script>
+  <script src="js/app.js?v=1.7"></script>
+  <script src="js/bushido-modal.js?v=1.3"></script>
+</body>
+</html>
+
+
+
+
+
