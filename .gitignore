@@ -1,9 +1,19 @@
-# WordPress (exclude from this front-end project)
+# WordPress core (exclude — only the kanji_2026 theme is tracked)
 wp-admin/
 wp-includes/
-wp-content/
 wp-*.php
 xmlrpc.php
+
+# wp-content: push ONLY the kanji_2026 theme
+wp-content/*
+!wp-content/themes/
+wp-content/themes/*
+!wp-content/themes/kanji_2026/
+
+# Heavy media that GitHub rejects (>100MB per file) — keep out of git
+wp-content/themes/kanji_2026/assets/video/*.mp4
+wp-content/themes/kanji_2026/assets/video/*.MP4
+wp-content/themes/kanji_2026/assets/img/*.mp4
 
 # Internal QA / temp / check files (do not push)
 _served.html

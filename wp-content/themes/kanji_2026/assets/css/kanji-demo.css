@@ -1,0 +1,405 @@
+.kanji-intro-active {
+	overflow: hidden;
+}
+
+.kanji-intro {
+	--intro-fade-duration: 950ms;
+	position: fixed;
+	inset: 0;
+	z-index: 1000000;
+	display: grid;
+	place-items: center;
+	padding: 2rem;
+	background-color: #080a09;
+	background-image:
+		radial-gradient(ellipse at 49% 47%, rgba(226, 225, 209, 0.035), transparent 58%),
+		radial-gradient(circle at 17% 23%, rgba(255, 255, 255, 0.09) 0 0.5px, transparent 1px),
+		radial-gradient(circle at 81% 74%, rgba(255, 255, 255, 0.07) 0 0.5px, transparent 1px);
+	color: #f1eee5;
+	font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", Georgia, serif;
+	transition: opacity var(--intro-fade-duration) cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear var(--intro-fade-duration);
+}
+
+.kanji-intro[hidden] {
+	display: none;
+}
+
+.kanji-intro.is-finishing {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.kanji-intro__speech-scene {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1s ease, visibility 0s linear 1s;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.kanji-intro__speech-scene.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 1s ease;
+}
+
+/* ── Katana slash reveal ───────────────────────────────────── */
+.kanji-intro__slash-beam {
+	position: absolute;
+	top: 50%;
+	left: -12%;
+	width: 124%;
+	height: 3px;
+	background: linear-gradient(90deg, transparent, #fffbe8 45%, #fff 55%, transparent);
+	box-shadow: 0 0 14px 4px rgba(255, 250, 230, 0.85);
+	transform: rotate(-14deg) translateY(-50%) scaleX(0);
+	transform-origin: left center;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 3;
+}
+
+.kanji-intro__slash-beam.is-cutting {
+	animation: kanji-intro-slash-sweep 0.45s cubic-bezier(0.16, 0.9, 0.28, 1) forwards;
+}
+
+@keyframes kanji-intro-slash-sweep {
+	0%   { transform: rotate(-14deg) translateY(-50%) scaleX(0); opacity: 0; }
+	12%  { opacity: 1; }
+	70%  { transform: rotate(-14deg) translateY(-50%) scaleX(1); opacity: 1; }
+	100% { transform: rotate(-14deg) translateY(-50%) scaleX(1); opacity: 0; }
+}
+
+.kanji-intro__slash-flash {
+	position: absolute;
+	inset: 0;
+	background: #fdfcf6;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 2;
+}
+
+.kanji-intro__slash-flash.is-flashing {
+	animation: kanji-intro-slash-flash 0.55s ease-out forwards;
+}
+
+@keyframes kanji-intro-slash-flash {
+	0%   { opacity: 0; }
+	25%  { opacity: 0.9; }
+	100% { opacity: 0; }
+}
+
+.kanji-intro__speech-img {
+	width: min(64vw, 30rem);
+	height: auto;
+	filter: drop-shadow(0 0 1.2rem rgba(240, 235, 216, 0.14));
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+.kanji-intro.is-finishing .kanji-intro__speech-scene,
+.kanji-intro.is-finishing .kanji-intro__composition {
+	opacity: 0;
+}
+
+.kanji-intro__composition {
+	display: grid;
+	justify-items: center;
+	width: min(100%, 28rem);
+	text-align: center;
+}
+
+.kanji-intro__eyebrow {
+	display: flex;
+	justify-content: space-between;
+	width: min(100%, 18rem);
+	margin: 0 0 1rem;
+	color: rgba(241, 238, 229, 0.58);
+	font-family: "Courier New", monospace;
+	font-size: 0.68rem;
+	letter-spacing: 0.12em;
+}
+
+.kanji-intro__glyph {
+	width: min(62vw, 21rem);
+	height: auto;
+	overflow: visible;
+	filter: drop-shadow(0 0 0.75rem rgba(240, 235, 216, 0.12));
+}
+
+.kanji-intro__stroke {
+	fill: none;
+	stroke: #f1eee5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	visibility: hidden;
+}
+
+.kanji-intro__stroke:nth-of-type(1) {
+	stroke-width: 15;
+}
+
+.kanji-intro__stroke:nth-of-type(2) {
+	stroke-width: 13;
+}
+
+.kanji-intro__stroke:nth-of-type(3) {
+	stroke-width: 14;
+}
+
+.kanji-intro.is-drawing .kanji-intro__stroke {
+	visibility: visible;
+}
+
+.kanji-intro__caption {
+	margin: 0.35rem 0 0;
+	color: rgba(241, 238, 229, 0.76);
+	font-size: 0.95rem;
+}
+
+.kanji-intro__skip {
+	position: absolute;
+	right: max(1.25rem, env(safe-area-inset-right));
+	bottom: max(1.25rem, env(safe-area-inset-bottom));
+	padding: 0.55rem 0.75rem;
+	border: 1px solid rgba(241, 238, 229, 0.32);
+	border-radius: 2px;
+	background: transparent;
+	color: #f1eee5;
+	cursor: pointer;
+	font: 600 0.75rem/1.2 "Courier New", monospace;
+}
+
+.kanji-intro__skip:hover,
+.kanji-intro__skip:focus-visible {
+	border-color: #f1eee5;
+	background: rgba(241, 238, 229, 0.08);
+}
+
+.kanji-intro__skip span {
+	margin-left: 0.55rem;
+}
+
+.kanji-home.site-main {
+	width: 100%;
+	min-height: 0;
+	padding: 0;
+}
+
+.kanji-home__hero {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.8fr);
+	align-items: center;
+	gap: 3rem;
+	width: min(100% - 3rem, 72rem);
+	min-height: min(72vh, 52rem);
+	margin-inline: auto;
+	padding-block: 5rem;
+}
+
+.kanji-home__hero-copy {
+	position: relative;
+	z-index: 1;
+	max-width: 38rem;
+}
+
+.kanji-home__eyebrow {
+	margin: 0 0 1.5rem;
+	color: #9a382e;
+	font-family: "Courier New", monospace;
+	font-size: 0.74rem;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.kanji-home__eyebrow span {
+	margin-right: 0.7rem;
+}
+
+.kanji-home__hero h1 {
+	max-width: 11ch;
+	margin: 0;
+	font-size: 4.4rem;
+	font-weight: 400;
+	line-height: 1.02;
+}
+
+.kanji-home__hero h1 em {
+	color: #176b5b;
+	font-weight: 400;
+}
+
+.kanji-home__intro {
+	max-width: 34rem;
+	margin: 1.5rem 0 0;
+	color: #626262;
+	font-size: 1.12rem;
+}
+
+.kanji-home__link,
+.kanji-home__top-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 1.2rem;
+	margin-top: 2rem;
+	color: #242424;
+	font-family: "Courier New", monospace;
+	font-size: 0.82rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.kanji-home__link span,
+.kanji-home__top-link span {
+	color: #9a382e;
+	font-size: 1.2rem;
+}
+
+.kanji-home__mark {
+	justify-self: center;
+	color: #176b5b;
+	font-size: 18rem;
+	line-height: 1;
+	text-shadow: 0.07em 0.04em 0 #e5e1d5;
+}
+
+.kanji-home__vertical-note {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	margin: 0;
+	color: #77776f;
+	font-size: 0.82rem;
+	writing-mode: vertical-rl;
+}
+
+.kanji-home__study {
+	display: grid;
+	grid-template-columns: 0.8fr 1.2fr auto;
+	align-items: start;
+	gap: 2.5rem;
+	padding: 3rem max(1.5rem, calc((100% - 72rem) / 2));
+	border-top: 1px solid #d8d8d2;
+	background: #f4f4f1;
+}
+
+.kanji-home__study-heading .kanji-home__eyebrow {
+	margin-bottom: 0.75rem;
+}
+
+.kanji-home__study h2 {
+	margin: 0;
+	font-size: 2rem;
+	font-weight: 400;
+}
+
+.kanji-home__study h2 span + span {
+	margin-left: 0.65rem;
+	color: #626262;
+	font-size: 1rem;
+	font-style: italic;
+}
+
+.kanji-home__study-copy {
+	max-width: 35rem;
+	margin: 0;
+	color: #52524d;
+}
+
+.kanji-home__top-link {
+	margin-top: 0.25rem;
+	white-space: nowrap;
+}
+
+@media (max-width: 50rem) {
+	.kanji-home__hero {
+		grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.65fr);
+		gap: 1rem;
+	width: min(100% - 2.5rem, 72rem);
+	min-height: 68vh;
+	padding-block: 4rem;
+	}
+
+	.kanji-home__hero h1 {
+		font-size: 3.4rem;
+	}
+
+	.kanji-home__mark {
+		font-size: 13rem;
+	}
+
+	.kanji-home__vertical-note {
+		display: none;
+	}
+
+	.kanji-home__study {
+		grid-template-columns: 1fr 1.4fr;
+		gap: 1.5rem;
+		padding-inline: 1.25rem;
+	}
+
+	.kanji-home__top-link {
+		grid-column: 2;
+		margin-top: 0;
+	}
+}
+
+@media (max-width: 38rem) {
+	.kanji-intro {
+		padding: 1.25rem;
+	}
+
+	.kanji-intro__glyph {
+		width: min(76vw, 19rem);
+	}
+
+	.kanji-home__hero {
+		grid-template-columns: 1fr;
+		gap: 0;
+		min-height: 0;
+		padding-block: 4rem 3rem;
+	}
+
+	.kanji-home__hero h1 {
+		font-size: 3rem;
+	}
+
+	.kanji-home__intro {
+		font-size: 1rem;
+	}
+
+	.kanji-home__mark {
+		position: absolute;
+		right: -0.4rem;
+		bottom: -1rem;
+		z-index: 0;
+		color: rgba(23, 107, 91, 0.12);
+		font-size: 12rem;
+	}
+
+	.kanji-home__study {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		padding-block: 2.5rem;
+	}
+
+	.kanji-home__top-link {
+		grid-column: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	.kanji-intro {
+		transition: none;
+	}
+}
